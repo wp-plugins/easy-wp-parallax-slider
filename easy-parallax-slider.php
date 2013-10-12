@@ -4,7 +4,7 @@
   Plugin URI: http://www.oscitasthemes.com
   Description: Easy Wordpress Parallax Slider provides layered slider feature.
   Version: 1.1.0
-  Author: oscitasthemes
+  Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
