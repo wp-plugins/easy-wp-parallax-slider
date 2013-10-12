@@ -1,5 +1,5 @@
 === Easy Wordpress Parallax Slider ===
-Contributors: osCitas Websolution Pvt. Ltd.
+Contributors: oscitasthemes
 Link: http://www.osCitasthemes.com
 Tags: Wordpress Slider, Wordpress Parallax Slider, Parallax Slider, CSS3 Slider
 Requires at least: 3.0
