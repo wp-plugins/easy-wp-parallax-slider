@@ -28,6 +28,7 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 * Upload images with wordpress media uploder.
 * You can set the slide change the interval.
 
+[Easy Wordpress Parallax Slider](http://demo.oscitasthemes.com/eps/ "Demo")
 
 == Installation ==
 
