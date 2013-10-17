@@ -30,6 +30,10 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 
 [Easy Wordpress Parallax Slider](http://demo.oscitasthemes.com/eps/ "Demo")
 
+For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wordpress.org/plugins/easy-bootstrap-shortcodes/)
+
+Want to implement responsive tabs to your pages, check this [Easy Responsive Tabs](http://wordpress.org/plugins/easy-responsive-tabs/)
+
 
 == Installation ==
 
