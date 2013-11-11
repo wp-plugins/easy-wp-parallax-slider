@@ -35,7 +35,6 @@ For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wo
 Want to implement responsive tabs to your pages, check this [Easy Responsive Tabs](http://wordpress.org/plugins/easy-responsive-tabs/)
 
 
-
 == Installation ==
 
 1.Upload:
@@ -49,7 +48,16 @@ Now you can see the EPS Settings link in left hand side links in admin area.
 
 It's that simple ... just what the name suggests
 
-
 == Screenshots ==
 
 1. how it looks after installation
+
+
+== Changelog ==
+
+= 1.2.0 =
+
+* [update] Full width slider image.
+* [update] Can set 0% as top for slider image.
+* [update] Can change Read More content.
+* [update] Can set read more text color, background color, border color.
