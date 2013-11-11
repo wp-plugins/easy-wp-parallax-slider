@@ -53,6 +53,7 @@ class epsAdminSlider extends epsSliderImageClass {
 		$thumb   = $this->eps_get_thumb();
 		$full    = wp_get_attachment_image_src($this->slide->ID, 'full');
 		$url     = get_post_meta($this->slide->ID, 'eps-slider_url', true);
+		$readmore     = get_post_meta($this->slide->ID, 'eps-slider_readmore', true);
 		$target  = get_post_meta($this->slide->ID, 'eps-slider_new_window', true) ? 'checked=checked' : '';
 		$heading = get_post_meta($this->slide->ID, 'eps-slider_heading', true);
 		$caption = htmlentities($this->slide->post_excerpt, ENT_QUOTES, 'UTF-8');
@@ -62,6 +63,7 @@ class epsAdminSlider extends epsSliderImageClass {
 		$str_content    = __("Content", $this->filename);
 		$str_new_window = __("New Window", $this->filename);
 		$str_url        = __("Read More Url", $this->filename);
+		$str_readmore        = __("Read More Text", $this->filename);
 
 		// slide row HTML
 		$row  = "<tr class='slide'>";
@@ -78,6 +80,8 @@ class epsAdminSlider extends epsSliderImageClass {
 		$row .= "        <div class='new_window'>";
 		$row .= "            <label>{$str_new_window}<input type='checkbox' name='attachment[{$this->slide->ID}][new_window]' {$target} /></label>";
 		$row .= "        </div>";
+		$row .= "        <input class='url' type='url' name='attachment[{$this->slide->ID}][readmore]' placeholder='{$str_readmore}' value='{$readmore}' />";
+		$row .= "        <div class='new_window'>";
 		$row .= "        <input type='hidden' name='attachment[{$this->slide->ID}][type]' value='image' />";
 		$row .= "        <input type='hidden' class='menu_order' name='attachment[{$this->slide->ID}][menu_order]' value='{$this->slide->menu_order}' />";
 		$row .= "    </td>";
@@ -104,6 +108,7 @@ class epsAdminSlider extends epsSliderImageClass {
 		$slide = array(
 			'thumb' => $url,
 			'url' => get_post_meta($this->slide->ID, 'eps-slider_url', true),
+			'readmore' => get_post_meta($this->slide->ID, 'eps-slider_readmore', true),
 			'heading' => get_post_meta($this->slide->ID, 'eps-slider_heading', true),
 			'alt' => get_post_meta($this->slide->ID, '_wp_attachment_image_alt', true),
 			'target' => get_post_meta($this->slide->ID, 'eps-slider_new_window', true) ? '_blank' : '_self',
@@ -117,9 +122,17 @@ class epsAdminSlider extends epsSliderImageClass {
 	private function eps_get_parallax_slider_markup($slide) {
 		if ($this->settings['topPer'] != 'false') {
 			$topPer = $this->settings['topPer'];
-		} else {
-			$topPer = "12";
 		}
+		else {
+			$topPer = "0";
+		}
+		if ($this->settings['leftPer'] != false) {
+			$leftPer = $this->settings['leftPer'];
+		}
+		else {
+			$leftPer = "0";
+		}
+
 
 		$html = " <div class='da-slide'>";
 		$html .= " <div class='da-slide-heading-content'>";
@@ -132,17 +145,24 @@ class epsAdminSlider extends epsSliderImageClass {
 		}
 		$html .= " </div>";
 		if (strlen($slide['url'])) {
-			$html .= "<a href='{$slide['url']}' target='{$slide['target']}' class='da-link'>Read More</a>";
+			$readmoretext=strlen($slide['readmore']) ? $slide['readmore']:'Read More';
+			$html .= "<a href='{$slide['url']}' target='{$slide['target']}' class='da-link'>{$readmoretext}</a>";
 		}
-		if ($this->settings['height']) {
-			$height = " height='{$this->settings['height']}px' ";
+		if ($this->settings['height'] != false || $this->settings['height']!= 0) {
+			$height = " height:{$this->settings['height']}px; ";
+		}else{
+			$height = " height: auto;";
+
 		}
 
-		if ($this->settings['width']) {
-			$width = " width='{$this->settings['width']}px' ";
+		if ($this->settings['width']!= false || $this->settings['width']!= 0) {
+			$width = " width:{$this->settings['width']}px; ";
+		} else{
+			$width = " width: 100%;";
+
 		}
 
-		$html .="<div class='da-img' style='top:{$topPer}%;line-height: 0;'><img {$height} {$width} src='{$slide['thumb']}' alt='{$slide['alt']}' /></div>";
+		$html .="<div class='da-img' style='top:{$topPer}%;left:{$leftPer}%;line-height: 0;{$height} {$width}'><img src='{$slide['thumb']}' alt='{$slide['alt']}' /></div>";
 		$html .='</div>';
 
 		return $html;
@@ -158,6 +178,7 @@ class epsAdminSlider extends epsSliderImageClass {
 
 		// store the URL as a meta field against the attachment
 		$this->eps_add_or_update_or_delete_meta($this->slide->ID, 'url', $fields['url']);
+		$this->eps_add_or_update_or_delete_meta($this->slide->ID, 'readmore', $fields['readmore']);
 		$this->eps_add_or_update_or_delete_meta($this->slide->ID, 'heading', $fields['heading']);
 
 		// store the 'new window' setting

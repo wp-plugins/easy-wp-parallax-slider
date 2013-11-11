@@ -51,3 +51,13 @@ It's that simple ... just what the name suggests
 == Screenshots ==
 
 1. how it looks after installation
+
+
+== Changelog ==
+
+= 1.2.0 =
+
+* [update] Full width slider image.
+* [update] Can set 0% as top for slider image.
+* [update] Can change Read More content.
+* [update] Can set read more text color, background color, border color.

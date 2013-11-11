@@ -102,7 +102,7 @@ $font_style_array=array('bold','italic','underline');
                             <?php _e("Size", $this->filename) ?>
                         </td>
                         <td>
-	                        <label class='option' >Width :</label><input type='number' min='1' max='100' step='1' size='3' class="width tipsytop" title='<?php _e("Width", $this->filename) ?>' name="settings[slider_width]" value='<?php echo ($this->slider->get_setting('slider_width')!= 'false' ? $this->slider->get_setting('slider_width') : 0) ?>' />px <label class='option' >&nbsp;</label><br/>
+	                        <label class='option' >Width :</label><input type='number' min='1' max='100' step='1' size='3' class="width tipsytop" title='<?php _e("Width", $this->filename) ?>' name="settings[slider_width]" value='<?php echo ($this->slider->get_setting('slider_width')!= 'false' ? $this->slider->get_setting('slider_width') : 0) ?>' />px <label class='option' >&nbsp;</label>
 	                        <label class='option' >Height :</label></label></label><input type='number' min='1' max='100' step='1' size='3' class="height tipsytop" title='<?php _e("Height", $this->filename) ?>' name="settings[slider_height]" value='<?php echo ($this->slider->get_setting('slider_height')!= 'false' ? $this->slider->get_setting('slider_height') : 0) ?>' />px
                         </td>
                     </tr>
@@ -296,6 +296,28 @@ $font_style_array=array('bold','italic','underline');
                         </td>
                     </tr>
                     <tr>
+	                    <td class='tipsy-tooltip' title="<?php _e("Set slide read more background color", $this->filename) ?>">
+		                    <?php _e("Background Color", $this->filename) ?>
+	                    </td>
+	                    <td>
+		                    <div id="readmore_bg_color" class="colorSelector">
+			                    <div class="select_color" id="readmore-bg-color-select" style="background-color: <?php echo $this->slider->get_setting('readmore_bg_color'); ?>"></div>
+			                    <input  class='option color' type='hidden' name="settings[readmore_bg_color]" value="<?php echo $this->slider->get_setting('readmore_bg_color'); ?>" size="3" css-prop="color"  />
+		                    </div>
+	                    </td>
+                    </tr>
+                    <tr>
+	                    <td class='tipsy-tooltip' title="<?php _e("Set slide read more border color", $this->filename) ?>">
+		                    <?php _e("Border Color", $this->filename) ?>
+	                    </td>
+	                    <td>
+		                    <div id="readmore_border_color" class="colorSelector">
+			                    <div class="select_color" id="readmore-border-color-select" style="background-color: <?php echo $this->slider->get_setting('readmore_border_color'); ?>"></div>
+			                    <input  class='option color' type='hidden' name="settings[readmore_border_color]" value="<?php echo $this->slider->get_setting('readmore_border_color'); ?>" size="3" css-prop="color"  />
+		                    </div>
+	                    </td>
+                    </tr>
+                    <tr>
                         <td colspan='2' class='highlight'><?php _e("Slide Image Settings", $this->filename) ?></td>
                     </tr>
                     <!--developer tools -->
@@ -308,11 +330,20 @@ $font_style_array=array('bold','italic','underline');
                         </td>
                     </tr>
                     <tr>
+                    <tr>
+	                    <td class='tipsy-tooltip' title="<?php _e("Specify the left position of the slides images (in %age)", $this->filename) ?>">
+		                    <?php _e("Left Position", $this->filename) ?>
+	                    </td>
+	                    <td>
+		                    <input type='number' min='1' max='100' step='1' name="settings[leftPer]" value='<?php if ($this->slider->get_setting('leftPer') != 'false') echo $this->slider->get_setting('leftPer') ?>' />%
+	                    </td>
+                    </tr>
+                    <tr>
                         <td class='tipsy-tooltip' title="<?php _e("Set the initial size for the slides images (width x height)", $this->filename) ?>">
                             <?php _e("Size", $this->filename) ?>
                         </td>
                         <td>
-                           <label class="option">Width :</label><input type='number' min='1' max='100' step='1' size='3' class="width tipsytop" title='<?php _e("Width", $this->filename) ?>' name="settings[width]" value='<?php echo ($this->slider->get_setting('width') != 'false' ? $this->slider->get_setting('width') : '') ?>' />px<label class="option">&nbsp;</label><br/>
+                           <label class="option">Width :</label><input type='number' min='1' max='100' step='1' size='3' class="width tipsytop" title='<?php _e("Width", $this->filename) ?>' name="settings[width]" value='<?php echo ($this->slider->get_setting('width') != 'false' ? $this->slider->get_setting('width') : '') ?>' />px<label class="option">&nbsp;</label>
 	                        <label class="option">Height :</label><input type='number' min='1' max='100' step='1' size='3' class="height tipsytop" title='<?php _e("Height", $this->filename) ?>' name="settings[height]" value='<?php echo ($this->slider->get_setting('height') != 'false' ? $this->slider->get_setting('height') : '') ?>' />px
                         </td>
                     </tr>

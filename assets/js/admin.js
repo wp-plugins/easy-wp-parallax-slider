@@ -189,5 +189,35 @@ if(widthval=='' || widthval==0){
             jQuery('#readmore_font_color input[type="hidden"]').val('#' + hex);
         }
     });
+    jQuery('#readmore_bg_color').ColorPicker({
+        color: '#0000ff',
+        onShow: function (colpkr) {
+            jQuery(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function (colpkr) {
+            jQuery(colpkr).fadeOut(500);
+            return false;
+        },
+        onChange: function (hsb, hex, rgb) {
+            jQuery('#readmore_bg_color div').css('backgroundColor', '#' + hex);
+            jQuery('#readmore_bg_color input[type="hidden"]').val('#' + hex);
+        }
+    });
+    jQuery('#readmore_border_color').ColorPicker({
+        color: '#0000ff',
+        onShow: function (colpkr) {
+            jQuery(colpkr).fadeIn(500);
+            return false;
+        },
+        onHide: function (colpkr) {
+            jQuery(colpkr).fadeOut(500);
+            return false;
+        },
+        onChange: function (hsb, hex, rgb) {
+            jQuery('#readmore_border_color div').css('backgroundColor', '#' + hex);
+            jQuery('#readmore_border_color input[type="hidden"]').val('#' + hex);
+        }
+    });
     jQuery('.eps-slider-settings-tbl tr:visible:even').css('background-color', '#F1F1F1');
 });

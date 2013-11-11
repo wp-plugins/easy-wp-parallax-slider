@@ -1,9 +1,9 @@
 <?php
 /*
-  Plugin Name: Easy Wordpress Parallax Slider
+  Plugin Name: Easy Parallax Slider
   Plugin URI: http://www.oscitasthemes.com
-  Description: Easy Wordpress Parallax Slider provides layered slider feature.
-  Version: 1.1.0
+  Description: Easy Parallax Slider provides layered slider feature.
+  Version: 1.2.0
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
@@ -38,14 +38,13 @@ class easyParallaxSlider {
 	    add_action('init', array($this, 'eps_register_post_type'));
 	    add_action('init', array($this, 'eps_register_taxonomy'));
         add_action('admin_menu', array($this, 'eps_register_admin_menu'));
-	    add_action('admin_head', array($this,'eps_ajaxurl'));
+	    add_action('admin_head', array($this,'ajaxurl'));
 
         add_shortcode('epsshortcode', array($this, 'eps_register_eps_shortcode'));
 	    add_shortcode('eps-slider', array($this, 'eps_register_eps_shortcode'));
 	    $this->eps_register_slide_types();
     }
-
-	public function eps_ajaxurl() {
+	public function ajaxurl() {
 		?>
 		<script type="text/javascript">
 			var epsajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
@@ -62,12 +61,6 @@ class easyParallaxSlider {
 	}
 
 	public function eps_register_admin_menu() {
-        update_option('EBS_CUSTOM_OPTION', '1');
-        update_option( 'EBS_BOOTSTRAP_JS_LOCATION', 2 );
-        update_option( 'EBS_BOOTSTRAP_JS_CDN_PATH', 'http://netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js' );
-
-        // EBS_BOOTSTRAP_CSS_LOCATION   '1' - for plugin file, '2' - don't user EBS files but use from other plugin or theme
-        update_option( 'EBS_BOOTSTRAP_CSS_LOCATION', 2 );
         $title = apply_filters('eps_menu_title', "EPS Settings");
 
         $page = add_menu_page(
