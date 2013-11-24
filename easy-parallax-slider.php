@@ -3,7 +3,7 @@
   Plugin Name: Easy Parallax Slider
   Plugin URI: http://www.oscitasthemes.com
   Description: Easy Parallax Slider provides layered slider feature.
-  Version: 1.2.0
+  Version: 1.3.0
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later

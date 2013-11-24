@@ -55,6 +55,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.3.0 =
+
+* [update] Touch-enabled
+
 = 1.2.0 =
 
 * [update] Full width slider image.
