@@ -55,6 +55,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.4.0 =
+
+* [fixed] session issue
+
 = 1.3.0 =
 
 * [update] Touch-enabled
