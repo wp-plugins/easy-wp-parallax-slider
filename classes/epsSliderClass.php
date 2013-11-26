@@ -18,8 +18,6 @@ class epsSliderClass {
         $this->eps_save();
 
         $this->eps_populate_slides();
-        session_start();
-
     }
 
     private function eps_get_settings() {
