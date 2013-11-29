@@ -297,6 +297,7 @@ class epsSliderClass {
 	public function eps_enqueue_scripts() {
 		if ($this->get_setting('printJs') == 'true') {
 			wp_enqueue_script('eps-slider-extra', EPS_ASSETS_URL . $this->js_path_extra, array('jquery'), EPS_VERSION);
+            wp_enqueue_script('eps-slider-touch', EPS_ASSETS_URL .'jquery.mobile-1.3.2.min.js', array('jquery'), EPS_VERSION);
 			wp_enqueue_script('eps-slider', EPS_ASSETS_URL . $this->js_path, array('jquery'), EPS_VERSION);
 		}
 		if ($this->get_setting('printCss') == 'true') {

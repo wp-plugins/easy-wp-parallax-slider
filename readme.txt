@@ -60,6 +60,11 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.0 =
+
+* [fixed] missed one file to upload.
+
+
 = 1.5.0 =
 
 * [update] Customize the navigation and pager colors.
