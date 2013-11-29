@@ -1,8 +1,8 @@
 === Easy Wordpress Parallax Slider ===
 Contributors: oscitas
 Link: http://www.osCitasthemes.com
-Tags: Wordpress Slider, Wordpress Parallax Slider, Parallax Slider, CSS3 Slider
-Requires at least: 3.0
+Tags: Wordpress Slider, Wordpress Parallax Slider, Parallax Slider, CSS3 Slider, drag, drop, touch, touch based slider, responsive slider,touch responsive slider
+Requires at least: 3.5
 Tested up to: 3.6.1
 Stable tag: 3.7
 License: GPLv2 or later
@@ -20,6 +20,7 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 
 * Multiple Sliders.
 * Drag n drop admin.
+* Touch enabled slider for mobiles
 * Generate shortcode and do shortcode functionality.
 * Different background and css for every slider.
 * Option for heading, caption and link for every slide.
@@ -27,6 +28,8 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 * Separate CSS settings for heading, content and read ore link .
 * Upload images with wordpress media uploder.
 * You can set the slide change the interval.
+* Every slide have its own settings such as text colors, image position etc.
+* Customize the navigation and pager colors.
 
 [Easy Wordpress Parallax Slider Demo](http://demo.oscitasthemes.com/demos/easy-wordpress-parallax-slider/ "Easy Wordpress Parallax Slider Demo")
 
@@ -51,9 +54,23 @@ It's that simple ... just what the name suggests
 == Screenshots ==
 
 1. how it looks after installation
+2. EPS new settings page (slide settings panel with each slide).
+3. Open slide settings panel.
 
 
 == Changelog ==
+
+= 1.5.0 =
+
+* [update] Customize the navigation and pager colors.
+* [update] You can set different colors/font family/size/ype for different titles.
+* [update] You can set different colors/font family/size/ype for different read more options.
+* [update] You can set different position/height/width settings for different slider contents.
+* [update] You can set different position/height/width settings for different images.
+* [update] Every slide have its own settings.
+* [update] Every slider have global settings, so that if you will not set custom settings for any or all slides it will use the global settings.
+
+
 
 = 1.4.0 =
 

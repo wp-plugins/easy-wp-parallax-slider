@@ -28,7 +28,9 @@
 					};
 
 					jQuery.post(ajaxurl, data, function(response) {
-						jQuery(".easy-parallax-slider .left table").append(response);
+						jQuery(".easy-parallax-slider .left table.append_slide").append(response);
+                        apply_aacordion(jQuery('.easy-parallax-slider').find('.eps-colapsable-slider'));
+                     jQuery('.easy-parallax-slider').find('.settingColorSelector').wpColorPicker();
 					});
 				});
 			});
