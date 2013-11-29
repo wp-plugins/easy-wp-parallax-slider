@@ -60,6 +60,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.1 =
+
+* [fixed] touch-enabled issues.
+
 = 1.6.0 =
 
 * [fixed] missed one file to upload.
