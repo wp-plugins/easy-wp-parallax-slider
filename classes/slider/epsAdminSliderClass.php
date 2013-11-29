@@ -207,15 +207,30 @@ class epsAdminSlider extends epsSliderImageClass {
             return ""; // bail out here. todo: look at a way of notifying the admin
         }
 
+        if ($this->settings['load_from_new'] ==  false || !$this->settings['load_from_new']) {
+            $url1     = get_post_meta($this->slide->ID, 'eps-slider_url', true);
+            $readmore     = get_post_meta($this->slide->ID, 'eps-slider_readmore', true);
+            $target  = get_post_meta($this->slide->ID, 'eps-slider_new_window', true) ? 'checked=checked' : '';
+            $heading = get_post_meta($this->slide->ID, 'eps-slider_heading', true);
+            $caption = htmlentities($this->slide->post_excerpt, ENT_QUOTES, 'UTF-8');
+        } else {
+            $url1     = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_url', true);
+            $readmore     = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore', true);
+            $target  = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_new_window', true) ? 'checked=checked' : '';
+            $heading = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading', true);
+            $caption = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_caption', true);
+        }
+
+
         // store the slide details
         $slide = array(
             'thumb' => $url,
-            'url' => get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_url', true),
-            'readmore' => get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore', true),
-            'heading' => get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading', true),
+            'url' => $url1,
+            'readmore' => $readmore,
+            'heading' => $heading,
             'alt' => get_post_meta($this->slider->ID, '_wp_attachment_'.$this->slide->ID.'_image_alt', true),
-            'target' => get_post_meta($this->slider->ID, 'eps-slider-'.$this->slide->ID.'_new_window', true) ? '_blank' : '_self',
-            'content' => get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_caption', true),
+            'target' => $target,
+            'content' => $caption,
             'content_raw' =>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_caption', true),
             'heading_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_size', true),
             'readmore_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_size', true),
