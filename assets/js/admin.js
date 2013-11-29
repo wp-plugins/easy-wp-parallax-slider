@@ -1,5 +1,16 @@
+function apply_aacordion(data){
+    var icons = {
+        header: "ui-icon-circle-arrow-e",
+        activeHeader: "ui-icon-circle-arrow-s"
+    };
+    jQuery(data).accordion({
+        icons: icons,
+        collapsible: true,
+        active:false
+    });
+}
 jQuery(document).ready(function($) {
-
+    apply_aacordion(".eps-colapsable-slider");
     // Enable the correct options for this slider type
     var switchType = function(slider) {
         jQuery('.easy-parallax-slider .option:not(.' + slider + ')').attr('disabled', 'disabled').parents('tr').hide();
@@ -129,6 +140,9 @@ if(widthval=='' || widthval==0){
 
                 // update the slides with the response html
                 $(".easy-parallax-slider .left tbody").html($(".easy-parallax-slider .left tbody", data).html());
+                apply_aacordion(jQuery('.easy-parallax-slider').find('.eps-colapsable-slider'));
+
+                jQuery('.easy-parallax-slider').find('.settingColorSelector').wpColorPicker();
                 if (button.id === 'preview') {
                     jQuery.colorbox({
                         iframe: true,
@@ -144,80 +158,8 @@ if(widthval=='' || widthval==0){
         });
     });
 
-    jQuery('#heading_font_color').ColorPicker({
-        color: '#0000ff',
-        onShow: function (colpkr) {
-            jQuery(colpkr).fadeIn(500);
-            return false;
-        },
-        onHide: function (colpkr) {
-            jQuery(colpkr).fadeOut(500);
-            return false;
-        },
-        onChange: function (hsb, hex, rgb) {
-            jQuery('#heading_font_color div').css('backgroundColor', '#' + hex);
-            jQuery('#heading_font_color input[type="hidden"]').val('#' + hex);
-        }
-    });
-    jQuery('#content_font_color').ColorPicker({
-        color: '#0000ff',
-        onShow: function (colpkr) {
-            jQuery(colpkr).fadeIn(500);
-            return false;
-        },
-        onHide: function (colpkr) {
-            jQuery(colpkr).fadeOut(500);
-            return false;
-        },
-        onChange: function (hsb, hex, rgb) {
-            jQuery('#content_font_color div').css('backgroundColor', '#' + hex);
-            jQuery('#content_font_color input[type="hidden"]').val('#' + hex);
-        }
-    });
-    jQuery('#readmore_font_color').ColorPicker({
-        color: '#0000ff',
-        onShow: function (colpkr) {
-            jQuery(colpkr).fadeIn(500);
-            return false;
-        },
-        onHide: function (colpkr) {
-            jQuery(colpkr).fadeOut(500);
-            return false;
-        },
-        onChange: function (hsb, hex, rgb) {
-            jQuery('#readmore_font_color div').css('backgroundColor', '#' + hex);
-            jQuery('#readmore_font_color input[type="hidden"]').val('#' + hex);
-        }
-    });
-    jQuery('#readmore_bg_color').ColorPicker({
-        color: '#0000ff',
-        onShow: function (colpkr) {
-            jQuery(colpkr).fadeIn(500);
-            return false;
-        },
-        onHide: function (colpkr) {
-            jQuery(colpkr).fadeOut(500);
-            return false;
-        },
-        onChange: function (hsb, hex, rgb) {
-            jQuery('#readmore_bg_color div').css('backgroundColor', '#' + hex);
-            jQuery('#readmore_bg_color input[type="hidden"]').val('#' + hex);
-        }
-    });
-    jQuery('#readmore_border_color').ColorPicker({
-        color: '#0000ff',
-        onShow: function (colpkr) {
-            jQuery(colpkr).fadeIn(500);
-            return false;
-        },
-        onHide: function (colpkr) {
-            jQuery(colpkr).fadeOut(500);
-            return false;
-        },
-        onChange: function (hsb, hex, rgb) {
-            jQuery('#readmore_border_color div').css('backgroundColor', '#' + hex);
-            jQuery('#readmore_border_color input[type="hidden"]').val('#' + hex);
-        }
-    });
+
+    jQuery('.settingColorSelector').wpColorPicker();
+
     jQuery('.eps-slider-settings-tbl tr:visible:even').css('background-color', '#F1F1F1');
 });

@@ -3,13 +3,13 @@
   Plugin Name: Easy Parallax Slider
   Plugin URI: http://www.oscitasthemes.com
   Description: Easy Parallax Slider provides layered slider feature.
-  Version: 1.4.0
+  Version: 1.5.0
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
 
-define('EPS_VERSION', '1.0');
+define('EPS_VERSION', '1.5');
 define('EPS_BASE_URL', plugins_url('',__FILE__));
 define('EPS_ASSETS_URL', EPS_BASE_URL . '/assets/');
 define('EPS_BASE_DIR_LONG', dirname(__FILE__));
@@ -227,14 +227,17 @@ class easyParallaxSlider {
 		wp_enqueue_media();
 
 		// plugin dependencies
+
+        wp_enqueue_script('wp-color-picker');
 		wp_enqueue_script('jquery-ui-core', array('jquery'));
 		wp_enqueue_script('jquery-ui-sortable', array('jquery', 'jquery-ui-core'));
 		wp_enqueue_script('eps-tipsy', EPS_ASSETS_URL . 'js/jquery.tipsy.js', array('jquery'), EPS_VERSION);
-		wp_enqueue_script('eps-colorpicker', EPS_ASSETS_URL . 'js/colorpicker.js', array('jquery', 'jquery-ui-core'), EPS_VERSION);
+//		wp_enqueue_script('eps-colorpicker', EPS_ASSETS_URL . 'js/colorpicker.js', array('jquery', 'jquery-ui-core'), EPS_VERSION);
 //		wp_enqueue_script('eps-cslider', EPS_ASSETS_URL . 'js/jquery.cslider.js', array('jquery', 'jquery-ui-core'), EPS_VERSION);
 		wp_enqueue_script('eps-admin-script', EPS_ASSETS_URL . 'js/admin.js', array('jquery', 'eps-tipsy', 'media-upload'), EPS_VERSION);
 		wp_enqueue_script('eps-admin-addslide', EPS_ASSETS_URL . 'images/image.js', array('eps-admin-script'), EPS_VERSION);
 		wp_enqueue_script('eps-colorbox', EPS_ASSETS_URL . 'js/jquery.colorbox-min.js', array('jquery'), EPS_VERSION);
+        wp_enqueue_script('eps-accordion', EPS_ASSETS_URL . 'js/accordion.js', array('jquery'), EPS_VERSION);
 
 		// localise the JS
 		wp_localize_script( 'eps-admin-script', 'epsscript', array(
@@ -250,11 +253,13 @@ class easyParallaxSlider {
     }
 
     function eps_register_admin_styles() {
+        wp_enqueue_style('wp-color-picker');
         wp_enqueue_style('eps-admin-styles', EPS_ASSETS_URL . 'css/admin.css', false, EPS_VERSION);
 //        wp_enqueue_style('eps-colorbox-styles', EPS_ASSETS_URL . 'colorbox/colorbox.css', false, EPS_VERSION);
-        wp_enqueue_style('eps-colorpicker', EPS_ASSETS_URL . 'css/colorpicker.css', false, EPS_VERSION);
+//        wp_enqueue_style('eps-colorpicker', EPS_ASSETS_URL . 'css/colorpicker.css', false, EPS_VERSION);
         wp_enqueue_style('eps-tipsy-styles', EPS_ASSETS_URL . 'css/tipsy.css', false, EPS_VERSION);
 	    wp_enqueue_style('eps-colorbox', EPS_ASSETS_URL . 'css/colorbox.css', false, EPS_VERSION);
+        wp_enqueue_style('eps-accordion', EPS_ASSETS_URL . 'css/accordion.css', false, EPS_VERSION);
 
         do_action('eps_register_admin_styles');
 
