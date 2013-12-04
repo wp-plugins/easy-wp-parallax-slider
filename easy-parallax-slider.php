@@ -3,13 +3,13 @@
   Plugin Name: Easy Parallax Slider
   Plugin URI: http://www.oscitasthemes.com
   Description: Easy Parallax Slider provides layered slider feature.
-  Version: 1.6.1
+  Version: 1.6.2
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
  */
 
-define('EPS_VERSION', '1.6.1');
+define('EPS_VERSION', '1.6.2');
 define('EPS_BASE_URL', plugins_url('',__FILE__));
 define('EPS_ASSETS_URL', EPS_BASE_URL . '/assets/');
 define('EPS_BASE_DIR_LONG', dirname(__FILE__));

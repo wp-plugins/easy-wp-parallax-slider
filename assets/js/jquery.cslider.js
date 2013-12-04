@@ -70,7 +70,10 @@
 
             var thisObj = this;
             this.$el.on("swipeleft",function(event){
+                //alert(123);
+                //$('.da-slide-current').css('right',10);
                 thisObj._nextSlide();
+                //alert(13);
             });
             this.$el.on("swiperight",function(event){
                 thisObj._prevSlide();

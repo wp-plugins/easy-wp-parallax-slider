@@ -318,12 +318,13 @@ class epsAdminSlider extends epsSliderImageClass {
 
             $leftPerval = " left:{$slide['image_left']}%; ";
             $leftPer=$slide['image_left'];
-        } elseif ($this->settings['topPer'] != 'false' || $this->settings['topPer']!=0) {
+        } elseif ($this->settings['leftPer'] != false || $this->settings['leftPer']!=0) {
             $leftPerval = " left:{$this->settings['leftPer']}%; ";
             $leftPer=$this->settings['leftPer'];
         }
         else {
-            $leftPer = "left:0;";
+            $leftPerval = "left:0;";
+            $leftPer=0;
         }
 
         if( $slide['image_height']== 'true'){
@@ -537,21 +538,18 @@ EOF;
             $html .= "  <h2>{$slide['heading']}</h2>";
         }
         if (strlen($slide['content'])) {
-            $html .= "<p>{$slide['content']}</p>";
-
+            $html .= "<p class='da-slide-content'>{$slide['content']}</p>";
         }
-        $html .= " </div>";
+        $html .= "</div>";
         if (strlen($slide['url'])) {
             $readmoretext=strlen($slide['readmore']) ? $slide['readmore']:'Read More';
             $html .= "<a href='{$slide['url']}' target='{$slide['target']}' id='da-link-".$this->slide->ID."' class='da-link'>{$readmoretext}</a>";
         }
-
-
-
+        $html=trim($html);
         $html .="<div id='da-img-".$this->slide->ID."' class='da-img'><img src='{$slide['thumb']}' alt='{$slide['alt']}' /></div>";
         $html .='</div>';
 
-        return $html;
+        return trim($html);
     }
 
     protected function eps_save($fields) {
