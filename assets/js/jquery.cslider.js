@@ -336,3 +336,5 @@
     };
 
 })( jQuery );
+jQuery.mobile.ajaxEnabled=false;
+jQuery.mobile.loadingMessage = false;
