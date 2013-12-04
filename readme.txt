@@ -60,6 +60,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.3 =
+
+* [fixed] Print "Loading Message" at the end of page  issue resolved.
+
 = 1.6.2 =
 
 * [fixed] Slider problem resolved.
