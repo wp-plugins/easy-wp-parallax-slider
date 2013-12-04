@@ -60,6 +60,11 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.2 =
+
+* [fixed] Slider problem resolved.
+* [fixed] Half button issue resolved.
+
 = 1.6.1 =
 
 * [fixed] touch-enabled issues.

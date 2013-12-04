@@ -74,7 +74,7 @@
 	/*font-family: 'Economica', Arial, sans-serif;*/
 	font-weight: 700;
 }
-.da-slide p{
+.da-slide p.da-slide-content{
 	width: 45%;
 	/*top: 155px;*/
 	top: 25%;
