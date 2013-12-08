@@ -60,6 +60,11 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.4 =
+
+* [Update] Option added to set top margin for slider content.
+* [fixed] On drag stretches picture at front end.
+
 = 1.6.3 =
 
 * [fixed] Print "Loading Message" at the end of page  issue resolved.
@@ -87,7 +92,6 @@ It's that simple ... just what the name suggests
 * [update] You can set different position/height/width settings for different images.
 * [update] Every slide have its own settings.
 * [update] Every slider have global settings, so that if you will not set custom settings for any or all slides it will use the global settings.
-
 
 
 = 1.4.0 =

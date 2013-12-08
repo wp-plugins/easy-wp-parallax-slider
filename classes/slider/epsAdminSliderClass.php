@@ -4,6 +4,9 @@ class epsAdminSlider extends epsSliderImageClass {
      * Register slide type
      */
     private $filename= null;
+    private $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco');
+    private $font_style_array=array('bold','italic','underline');
+
     public function __construct() {
         session_start();
         $pluginmenu=explode('/',plugin_basename(__FILE__));
@@ -53,7 +56,6 @@ class epsAdminSlider extends epsSliderImageClass {
 
         $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco');
 
-        $font_style_array=array('bold','italic','underline');
         // get some slide settings
         $thumb   = $this->eps_get_thumb();
         $full    = wp_get_attachment_image_src($this->slide->ID, 'full');
@@ -73,6 +75,7 @@ class epsAdminSlider extends epsSliderImageClass {
         $flag = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_flag', true);
         $heading_font_size=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_size', true);
         $readmore_font_size=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_size', true);
+        $content_top_margin=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_top_margin', true);
         $content_font_size=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_size', true);
         $heading_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_family', true);
         $readmore_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_family', true);
@@ -97,6 +100,7 @@ class epsAdminSlider extends epsSliderImageClass {
         $str_new_window = __("New Window", $this->filename);
         $str_url        = __("Read More Url", $this->filename);
         $str_readmore        = __("Read More Text", $this->filename);
+        $str_font_top_margin = __("Top Margin", $this->filename);
         $str_font_size = __("Font Size", $this->filename);
         $str_font_family = __("Font Family", $this->filename);
         $str_font_style = __("Font Style", $this->filename);
@@ -128,60 +132,212 @@ class epsAdminSlider extends epsSliderImageClass {
         $row .= "        <input type='hidden' class='menu_order' name='attachment[{$this->slide->ID}][menu_order]' value='{$this->slide->menu_order}' />";
         $row .= "    <div class='eps-colapsable-slider'>";
         $row.='<h3 class="slide-settings">Slide Settings</h3>';
-        $row .= "<div><table class='eps_slide_setting'>";
-        $row.='<tr><td><h4 class="slide-settings">Slide Heading Settings</h4></td><td><h4 class="slide-settings">Slide Read More Settings</h4></td></tr>';
-        $row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][heading_font_size]' value='{$heading_font_size}' /></td><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][readmore_font_size]' value='{$readmore_font_size}' /></td></tr>";
-        $row .= "<tr><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_font_family]'>";
-        foreach($font_family_array as $heading_font_family_value){
-            $row.='<option value="'.$heading_font_family_value.'" '.($heading_font_family==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
-        }
-        $row.="</select></td><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_font_family]'>";
-        foreach($font_family_array as $heading_font_family_value){
-            $row.='<option value="'.$heading_font_family_value.'" '.($readmore_font_family==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
-        }
-        $row.="</select></td></tr>";
-        $row .= "<tr><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][heading_font_style]'>";
-        foreach($font_style_array as $font_style_value){
-            $row.='<option value="'.$font_style_value.'" '.($heading_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
-        }
-        $row.="</select></td><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][readmore_font_style]'>";
-        foreach($font_style_array as $font_style_value){
-            $row.='<option value="'.$font_style_value.'" '.($readmore_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
-        }
-        $row.="</select></td></tr>";
-        $row .= "<tr><td><label>{$str_font_color}</label>
-                <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][heading_font_color]' value='{$heading_font_color}'/>
-                </td>";
-        $row .= "<td><label>{$str_font_color}</label>
-                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_font_color]' value='{$readmore_font_color}'/>
-                </td><tr>";
+        $row .= '<div><table border="0" cellspacing="0" cellpadding="0">';
+        $heading_font_family = $this->_osc_create_font_family_select($heading_font_family);
+        $readmore_font_family = $this->_osc_create_font_family_select($readmore_font_family);
+        $content_font_family = $this->_osc_create_font_family_select($content_font_family);
+
+        $heading_font_style = $this->_osc_create_font_style_select($heading_font_style);
+        $readmore_font_style = $this->_osc_create_font_style_select($readmore_font_style);
+        $content_font_style = $this->_osc_create_font_style_select($content_font_style);
 
 
+        $row .= <<<EOS
 
-        $row.='<tr><td><h4 class="slide-settings">Slide Content Settings</h4></td>';
-        $row.="<td><label>{$str_bg_color}</label><input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_bg_color]' value='{$readmore_bg_color}'/></td></td></tr>";
-        $row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_font_size]' value='{$content_font_size}' /></td><td><label>{$str_border_color}</label>
-                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_border_color]' value='{$readmore_border_color}'/></td></tr>";
-        $row .= "<tr><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][content_font_family]'>";
-        foreach($font_family_array as $content_font_family_value){
-            $row.='<option value="'.$content_font_family_value.'" '.($content_font_family==$content_font_family_value?'selected="selected"':'').'>'.$content_font_family_value.'</option>';
-        }
-        $row.="</select></td><td><h4 class='slide-settings'>Slide Image Settings</h4></td></tr>";
-        $row .= "<tr><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][content_font_style]'>";
-        foreach($font_style_array as $font_style_value){
-            $row.='<option value="'.$font_style_value.'" '.($content_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
-        }
-        $row.="</select></td><td><label>{$str_top}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_top]' value='{$image_top}' />%</td></tr>";
-        $row .= "<tr><td><label>{$str_font_color}</label>
-                <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][content_font_color]' value='{$content_font_color}'/>
-                </td>";
-        $row .= "<td><label>{$str_left}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_left]' value='{$image_left}' />%
-                </td></tr>";
-        $row .= "<tr><td><label>{$str_line_height}</label>
-                <input  class='option' type='text' name='attachment[{$this->slide->ID}][content_line_height]' value='{$content_line_height}'/>
-                </td>";
-        $row .= "<td><label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;<label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
-                </td></tr>";
+<tr>
+    <td width="50%">
+        <table class='eps_slide_setting' width="100%">
+            <tr>
+                <td>
+                    <h4 class="slide-settings">Slide Heading Settings</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_size}</label>
+                    <input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][heading_font_size]' value='{$heading_font_size}' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_font_family]'>$heading_font_family</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][heading_font_style]'>$heading_font_style</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_color}</label>
+                    <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][heading_font_color]' value='{$heading_font_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4 class="slide-settings">Slide Content Settings</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_top_margin}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_top_margin]' value='{$content_top_margin}' /> px
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_font_size]' value='{$content_font_size}' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][content_font_family]'>$content_font_family</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][content_font_style]'>$content_font_style
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_color}</label>
+                    <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][content_font_color]' value='{$content_font_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_line_height}</label>
+                    <input  class='option' type='text' name='attachment[{$this->slide->ID}][content_line_height]' value='{$content_line_height}'/>
+                </td>
+            </tr>
+        </table>
+    </td>
+EOS;
+        $row .= <<<EOS
+    <td width="50%">
+        <table class='eps_slide_setting' width="100%">
+            <tr>
+                <td>
+                    <h4 class="slide-settings">Slide Read More Settings</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_size}</label>
+                    <input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][readmore_font_size]' value='{$readmore_font_size}' />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_font_family]'>$readmore_font_family</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][readmore_font_style]'>$readmore_font_style</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_color}</label>
+                    <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_font_color]' value='{$readmore_font_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_bg_color}</label><input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_bg_color]' value='{$readmore_bg_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_border_color}</label>
+                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_border_color]' value='{$readmore_border_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <h4 class='slide-settings'>Slide Image Settings</h4>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_top}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_top]' value='{$image_top}' />%
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_left}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_left]' value='{$image_left}' />%
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;
+                    <label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
+                </td>
+            </tr>
+        </table>
+    </td>
+</tr>
+
+EOS;
+
+
+        //$row.='<tr><td><h4 class="slide-settings">Slide Heading Settings</h4></td><td><h4 class="slide-settings">Slide Read More Settings</h4></td></tr>';
+        //$row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][heading_font_size]' value='{$heading_font_size}' /></td><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][readmore_font_size]' value='{$readmore_font_size}' /></td></tr>";
+//        $row .= "<tr><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_font_family]'>";
+//        foreach($font_family_array as $heading_font_family_value){
+//            $row.='<option value="'.$heading_font_family_value.'" '.($heading_font_family==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
+//        }
+//        $row.="</select></td><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_font_family]'>";
+//        foreach($font_family_array as $heading_font_family_value){
+//            $row.='<option value="'.$heading_font_family_value.'" '.($readmore_font_family==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
+//        }
+//        $row.="</select></td></tr>";
+//        $row .= "<tr><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][heading_font_style]'>";
+//        foreach($font_style_array as $font_style_value){
+//            $row.='<option value="'.$font_style_value.'" '.($heading_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
+//        }
+//        $row.="</select></td><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][readmore_font_style]'>";
+//        foreach($font_style_array as $font_style_value){
+//            $row.='<option value="'.$font_style_value.'" '.($readmore_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
+//        }
+//        $row.="</select></td></tr>";
+//        $row .= "<tr><td><label>{$str_font_color}</label>
+//                <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][heading_font_color]' value='{$heading_font_color}'/>
+//                </td>";
+//        $row .= "<td><label>{$str_font_color}</label>
+//                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_font_color]' value='{$readmore_font_color}'/>
+//                </td><tr>";
+//
+//
+//
+//        $row.='<tr><td><h4 class="slide-settings">Slide Content Settings</h4></td>';
+//        $row.="<td><label>{$str_bg_color}</label><input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_bg_color]' value='{$readmore_bg_color}'/></td></td></tr>";
+//        //$row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_font_size]' value='{$content_font_size}' /></td><td><label>{$str_border_color}</label>";
+//
+//        $row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_font_size]' value='{$content_font_size}' /></td><td><label>{$str_border_color}</label>
+//                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_border_color]' value='{$readmore_border_color}'/></td></tr>";
+//        $row .= "<tr><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][content_font_family]'>";
+//        foreach($font_family_array as $content_font_family_value){
+//            $row.='<option value="'.$content_font_family_value.'" '.($content_font_family==$content_font_family_value?'selected="selected"':'').'>'.$content_font_family_value.'</option>';
+//        }
+//        $row.="</select></td><td><h4 class='slide-settings'>Slide Image Settings</h4></td></tr>";
+//        $row .= "<tr><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][content_font_style]'>";
+//        foreach($font_style_array as $font_style_value){
+//            $row.='<option value="'.$font_style_value.'" '.($content_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
+//        }
+//        $row.="</select></td><td><label>{$str_top}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_top]' value='{$image_top}' />%</td></tr>";
+//        $row .= "<tr><td><label>{$str_font_color}</label>
+//                <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][content_font_color]' value='{$content_font_color}'/>
+//                </td>";
+//        $row .= "<td><label>{$str_left}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_left]' value='{$image_left}' />%
+//                </td></tr>";
+//        $row .= "<tr><td><label>{$str_line_height}</label>
+//                <input  class='option' type='text' name='attachment[{$this->slide->ID}][content_line_height]' value='{$content_line_height}'/>
+//                </td>";
+//        $row .= "<td><label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;<label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
+//                </td></tr>";
         $row .= "    </table></div>";
         $row .= "    </div>";
         $row .= "    </td>";
@@ -192,6 +348,24 @@ class epsAdminSlider extends epsSliderImageClass {
 
         return $row;
     }
+
+
+    protected function _osc_create_font_family_select($selected_font_family='') {
+        $html = '';
+        foreach($this->font_family_array as $font_family_value){
+            $html .='<option value="'.$font_family_value.'" '.($selected_font_family==$font_family_value?'selected="selected"':'').'>'.$font_family_value.'</option>';
+        }
+        return $html;
+    }
+
+    protected function _osc_create_font_style_select($selected_font_style='') {
+        $html = '';
+        foreach($this->font_style_array as $font_style_value){
+            $html .='<option value="'.$font_style_value.'" '.($selected_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
+        }
+        return $html;
+    }
+
     protected function eps_get_public_slide() {
         // get the image url (and handle cropping)
         $imageHelper = new epsImageHelperClass(
@@ -234,6 +408,7 @@ class epsAdminSlider extends epsSliderImageClass {
             'content_raw' =>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_caption', true),
             'heading_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_size', true),
             'readmore_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_size', true),
+            'content_top_margin'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_top_margin', true),
             'content_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_size', true),
             'heading_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_family', true),
             'readmore_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_family', true),
@@ -270,6 +445,7 @@ class epsAdminSlider extends epsSliderImageClass {
         if($slide['heading_font_style']=='bold'){
             $heading_font_style='font-weight:'.$slide['heading_font_style'].';';
         }
+        $content_top_margin=($slide['content_top_margin']!=false || $slide['content_top_margin']!='')?'margin-top:'.$slide['content_top_margin'].'px;':'';
         $content_font_size=($slide['content_font_size']!=false || $slide['content_font_size']!='')?'font-size:'.$slide['content_font_size'].'px;':'';
         $content_font_family='font-family:'.$slide['content_font_family'].';';
         $content_font_color=($slide['content_font_color']!=false || $slide['content_font_color']!='')?'color:'.$slide['content_font_color'].';':'';
@@ -299,6 +475,10 @@ class epsAdminSlider extends epsSliderImageClass {
         $readmore_bg_color=($slide['readmore_bg_color']!=false || $slide['readmore_bg_color']!='')?'background:'.$slide['readmore_bg_color'].';':'';
 //        $readmore_hoverbgcolor='background-color:'.$this->colourBrightness($slide['readmore_bg_color'],0.80).';';
 
+        if(!$content_top_margin && ($this->settings['content_top_margin'] != 'false' || $this->settings['content_top_margin']!=0)) {
+            $content_top_margin = " margin-top:{$this->settings['content_top_margin']}px; ";
+        }
+
         if( $slide['image_top']== 'true'){
             $topPer = "top:0;";
         } elseif($slide['image_top']!= false || $slide['image_top']!= 0){
@@ -311,6 +491,8 @@ class epsAdminSlider extends epsSliderImageClass {
         else {
             $topPer = "top:0;";
         }
+
+
         if( $slide['image_left']== 'true'){
             $leftPerval = "left:0;";
             $leftPer=0;
@@ -376,6 +558,7 @@ class epsAdminSlider extends epsSliderImageClass {
         {$heading_font_style}
         }
          .eps-custom-{$this->slider->ID} #da-slide-heading-{$this->slide->ID} p{
+         {$content_top_margin}
         {$content_font_size}
         {$content_font_family}
         {$content_font_color}
@@ -546,7 +729,8 @@ EOF;
             $html .= "<a href='{$slide['url']}' target='{$slide['target']}' id='da-link-".$this->slide->ID."' class='da-link'>{$readmoretext}</a>";
         }
         $html=trim($html);
-        $html .="<div id='da-img-".$this->slide->ID."' class='da-img'><img src='{$slide['thumb']}' alt='{$slide['alt']}' /></div>";
+        $html .="<div id='da-img-".$this->slide->ID."' class='da-img' style=' background: url({$slide['thumb']});' title='{$slide['alt']}' >&nbsp;</div>";
+        //$html .="<div id='da-img-".$this->slide->ID."' class='da-img'><img src='{$slide['thumb']}' alt='{$slide['alt']}' /></div>";
         $html .='</div>';
 
         return trim($html);
@@ -573,6 +757,7 @@ EOF;
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_new_window', $new_window);
 
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_font_size', $fields['readmore_font_size']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_top_margin', $fields['content_top_margin']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_font_size', $fields['content_font_size']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_font_family', $fields['heading_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_font_family', $fields['readmore_font_family']);

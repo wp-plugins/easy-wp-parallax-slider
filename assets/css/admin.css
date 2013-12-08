@@ -231,7 +231,7 @@
 }
 .easy-parallax-slider .left table td {
     border-top: 0;
-    padding: 8px;
+    padding: 4px;
 }
 .easy-parallax-slider .left table td.col-2 {
     padding: 8px 8px 8px 0;
@@ -430,7 +430,7 @@ ul.info li {
     line-height: 28px;
     margin: 0 5px 0 0;
     padding: 4px 6px !important;
-    width: 46%;
+    width: 97%;
 }
 .eps_slide_setting td label {
     float: left;
