@@ -206,6 +206,14 @@ if (!$sliderId) {
     <td colspan='2' class='highlight'><?php _e("Slide Content Settings", $this->filename) ?></td>
 </tr>
 <tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide content top margin", $this->filename) ?>">
+        <?php _e("Top Margin", $this->filename) ?>
+    </td>
+    <td>
+        <input class='option' type='number' min='1' max='100' step='1' name="settings[content_top_margin]" value="<?php echo $this->slider->get_setting('content_top_margin'); ?>" size="3" />px
+    </td>
+</tr>
+<tr>
     <td class='tipsy-tooltip' title="<?php _e("Set slide content font size", $this->filename) ?>">
         <?php _e("Font Size", $this->filename) ?>
     </td>
