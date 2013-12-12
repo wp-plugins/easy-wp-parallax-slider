@@ -60,6 +60,12 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.5 =
+
+* [fixed] Strange orange line issue reported by end users.
+* [fixed] Improved touch functionality.
+
+
 = 1.6.4 =
 
 * [Update] Option added to set top margin for slider content.
