@@ -69,14 +69,17 @@
             this._loadEvents();
 
             var thisObj = this;
-            this.$el.on("swipeleft",function(event){
-                //alert(123);
+//            this.$el.hammer({ drag_lock_to_axis: true })
+//                .on("release dragleft dragright swipeleft swiperight", handleHammer);
+            this.$el.hammer({ drag_lock_to_axis: false }).on("dragleft swipeleft",function(event){
                 //$('.da-slide-current').css('right',10);
                 thisObj._nextSlide();
+                ev.gesture.stopDetect();
                 //alert(13);
             });
-            this.$el.on("swiperight",function(event){
+            this.$el.hammer({ drag_lock_to_axis: false }).on("dragright swiperight",function(event){
                 thisObj._prevSlide();
+                ev.gesture.stopDetect();
             });
 
 
@@ -336,5 +339,7 @@
     };
 
 })( jQuery );
-jQuery.mobile.ajaxEnabled=false;
-jQuery.mobile.loadingMessage = false;
+
+
+//jQuery.mobile.ajaxEnabled=false;
+//jQuery.mobile.loadingMessage = false;
