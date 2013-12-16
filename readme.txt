@@ -60,6 +60,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.6 =
+
+* [Update] New option to choose the background of slider, now you can add custom background color too.
+
 = 1.6.5 =
 
 * [fixed] Strange orange line issue reported by end users.

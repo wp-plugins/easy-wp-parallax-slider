@@ -59,7 +59,7 @@ class epsAdminSlider extends epsSliderImageClass {
         // get some slide settings
         $thumb   = $this->eps_get_thumb();
         $full    = wp_get_attachment_image_src($this->slide->ID, 'full');
-        if ($this->settings['load_from_new'] ==  false || !$this->settings['load_from_new']) {
+        if (!isset($this->settings['load_from_new']) || $this->settings['load_from_new'] ==  false || $this->settings['load_from_new']=='') {
             $url     = get_post_meta($this->slide->ID, 'eps-slider_url', true);
             $readmore     = get_post_meta($this->slide->ID, 'eps-slider_readmore', true);
             $target  = get_post_meta($this->slide->ID, 'eps-slider_new_window', true) ? 'checked=checked' : '';
@@ -272,8 +272,7 @@ EOS;
             </tr>
             <tr>
                 <td>
-                    <label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;
-                    <label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
+                    <label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;<label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
                 </td>
             </tr>
         </table>
@@ -381,7 +380,7 @@ EOS;
             return ""; // bail out here. todo: look at a way of notifying the admin
         }
 
-        if ($this->settings['load_from_new'] ==  false || !$this->settings['load_from_new']) {
+        if (!isset($this->settings['load_from_new']) || $this->settings['load_from_new'] ==  false || $this->settings['load_from_new']=='') {
             $url1     = get_post_meta($this->slide->ID, 'eps-slider_url', true);
             $readmore     = get_post_meta($this->slide->ID, 'eps-slider_readmore', true);
             $target  = get_post_meta($this->slide->ID, 'eps-slider_new_window', true) ? 'checked=checked' : '';
@@ -429,10 +428,12 @@ EOS;
         );
 
         // return the slide HTML
+
         return $this->eps_get_parallax_slider_markup($slide).$this->eps_get_parallax_slider_markup_style($slide);
     }
 
     private function eps_get_parallax_slider_markup_style($slide){
+
         $heading_font_size=($slide['heading_font_size']!=false || $slide['heading_font_size']!=0)?'font-size:'.$slide['heading_font_size'].'px;':'';
         $heading_font_family=($slide['heading_font_family']!=false || $slide['heading_font_family']!='')?'font-family:'.$slide['heading_font_family'].';':'';
         $heading_font_color=($slide['heading_font_color']!=false || $slide['heading_font_color']!='')?'color:'.$slide['heading_font_color'].';':'';
@@ -475,7 +476,8 @@ EOS;
         $readmore_bg_color=($slide['readmore_bg_color']!=false || $slide['readmore_bg_color']!='')?'background:'.$slide['readmore_bg_color'].';':'';
 //        $readmore_hoverbgcolor='background-color:'.$this->colourBrightness($slide['readmore_bg_color'],0.80).';';
 
-        if(!$content_top_margin && ($this->settings['content_top_margin'] != 'false' || $this->settings['content_top_margin']!=0)) {
+
+        if(!$content_top_margin && (isset($this->settings['content_top_margin']) &&  ($this->settings['content_top_margin'] != 'false' || $this->settings['content_top_margin']!=0))) {
             $content_top_margin = " margin-top:{$this->settings['content_top_margin']}px; ";
         }
 
@@ -528,13 +530,13 @@ EOS;
             $width = " width: 100%;";
         }
 
-        if ($this->settings['navigation_color']!= false || $this->settings['navigation_color']!= '') {
+        if (isset($this->settings['navigation_color']) && ($this->settings['navigation_color']!= false || $this->settings['navigation_color']!= '')) {
             $navigation_color = $this->settings['navigation_color'];
         } else {
             $navigation_color = '#E4B42D';
         }
 
-        if ($this->settings['pager_color']!= false || $this->settings['pager_color']!= '') {
+        if (isset($this->settings['pager_color']) && ($this->settings['pager_color']!= false || $this->settings['pager_color']!= '')) {
             $pager_color = $this->settings['pager_color'];
         } else {
             $pager_color = '#E4B42D';
@@ -543,7 +545,7 @@ EOS;
         $leftper5=intval($leftPer)-5;
         $leftper6=intval($leftPer)-10;
         $leftper7=intval($leftPer)+10;
-        $css .=<<<EOF
+        $css =<<<EOF
 
      .eps-custom-{$this->slider->ID} #da-img-{$this->slide->ID}{
         {$height}

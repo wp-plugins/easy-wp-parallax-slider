@@ -18,6 +18,7 @@ class epsSliderClass {
 		$this->eps_save();
 
 		$this->eps_populate_slides();
+        if(!session_id())
         session_start();
 
 	}
@@ -60,6 +61,7 @@ class epsSliderClass {
 			'readmore_font_color'=>'#ffffff',
 			'readmore_bg_color'=>'#ffffff',
 			'readmore_border_color'=>'#ffffff',
+            'content_top_margin'=> 0,
 			'topPer'=>0,
 			'leftPer'=>0
 		);
@@ -383,20 +385,36 @@ class epsSliderClass {
 					$scoped = '';
 				}
 			}
-			$bg_img=EPS_ASSETS_URL.'images/waves.gif';
+        $bg_type=$this->get_setting('slider_bg_type');
+        if($bg_type=='default'){
+            $bg_img=EPS_ASSETS_URL.'images/waves.gif';
+            $bg_img_style='transparent';
+        } elseif($bg_type=='image'){
+            $url= get_post_meta($this->id, 'eps-slider_bg', true);
+            if($url){
+                $bg_img=$url;
+                $border_top='';
+                $border_bottom='';
+            } else{
+                $bg_img=EPS_ASSETS_URL.'images/waves.gif';
+            }
+            $bg_img_style='transparent';
+        }elseif($bg_type=='color'){
+               $bg_img_style=$this->get_setting('sbg_color');
+            $bg_img='';
+        } else{
+            $bg_img=EPS_ASSETS_URL.'images/waves.gif';
+            $bg_img_style='transparent';
+        }
 			$border_top='border-top: 8px solid #efc34a';
 			$border_bottom='border-bottom: 8px solid #efc34a;';
-			$url= get_post_meta($this->id, 'eps-slider_bg', true);
 			$height='height:390px;';
 			//echo $this->get_setting('slider_height');
 			if($this->get_setting('slider_height')){
 				$height='height:'.$this->get_setting('slider_height').'px;';
 			}
-			if($url){
-				$bg_img=$url;
-				$border_top='';
-				$border_bottom='';
-			}
+
+
 			$bottom_navigations='';
 			if ($this->get_setting('links') != 'true') {
 				$bottom_navigations='display:none;';
@@ -453,9 +471,9 @@ class epsSliderClass {
 				$line_height='line-height:'.$this->get_setting('content_font_line_height').'px;';
 			}
 
-			$css .=<<<EOF
+			$css =<<<EOF
                     .eps-custom-{$this->id}{
-                    background: transparent url({$bg_img}) repeat 0% 0%;
+                    background: url({$bg_img}) {$bg_img_style} repeat 0% 0%;
                     {$border_top}
                     {$border_bottom}
                     {$height}

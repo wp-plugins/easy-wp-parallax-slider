@@ -231,7 +231,7 @@
 }
 .easy-parallax-slider .left table td {
     border-top: 0;
-    padding: 4px;
+    padding: 8px;
 }
 .easy-parallax-slider .left table td.col-2 {
     padding: 8px 8px 8px 0;
@@ -435,7 +435,7 @@ ul.info li {
 .eps_slide_setting td label {
     float: left;
     line-height: 26px;
-    width: 30%;
+    min-width: 30%;
 }
 .eps_slide_setting td input, .eps_slide_setting td select{
     float: left;
@@ -448,4 +448,12 @@ span.wp-picker-input-wrap .wp-color-picker{
 span.wp-picker-input-wrap .button-small{
     width: 50px;
     height: 26px !important;
+}
+
+.easy-parallax-slider.wp-picker-container{
+    position: relative;
+}
+.easy-parallax-slider .iris-picker {
+    position: absolute;
+    z-index: 10;
 }
