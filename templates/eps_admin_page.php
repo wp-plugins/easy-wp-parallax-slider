@@ -78,25 +78,49 @@ if (!$sliderId) {
 <tr>
     <td colspan='2' class='highlight'><?php _e("Slider Settings", $this->filename) ?></td>
 </tr>
+
 <tr>
-    <td width='50%' class='tipsy-tooltip' title="<?php _e("Set the default background image for slider.", $this->filename) ?>">
+    <td width='50%' class='tipsy-tooltip' title="<?php _e("Set the default background  for slider.", $this->filename) ?>">
         <?php _e("Background", $this->filename) ?>
         <input class="select-slider" id='flex' rel='flex' type='hidden' name="settings[type]" value='flex' />
     </td>
-    <td width='50%'>
+    <td width="100%">
+        <input class='option check_sbg' type='radio' id="sbg_def" name="settings[slider_bg_type]" <?php if ($this->slider->get_setting('slider_bg_type') == 'default') echo 'checked="checked"'; if($this->slider->get_setting('slider_bg_type')== false || $this->slider->get_setting('slider_bg_type')== '' || $this->slider->get_setting('slider_bg_type')== 'false')  { echo 'checked="checked"'; }?> value="default"/> <label class='option' for="sbg_def">Default</label>
+        <input class='option check_sbg' type='radio' id="sbg_img" name="settings[slider_bg_type]" <?php if ($this->slider->get_setting('slider_bg_type') == 'image') echo 'checked="checked"' ?> value="image"/><label class='option' for="sbg_img">Upload Image</label>
+        <input class='option check_sbg' type='radio' id="sbg_color" name="settings[slider_bg_type]" <?php if ($this->slider->get_setting('slider_bg_type') == 'color') echo 'checked="checked"' ?> value="color"/><label class='option' for="sbg_color">Color</label>
+    </td>
+</tr>
+<tr>
+    <td width='100%' colspan="2">
         <div id="bg-preview" class="bg-preview" style="width: 130px; float: left;">
-            <?php
-            if($sliderId && get_post_meta($sliderId, 'eps-slider_bg', true)){
-                $bg_url=get_post_meta($this->slider->id, 'eps-slider_bg', true);
-            }else{
+            <div id="used_sbg_def" class="hide_all_bg">
+                <?php
+
                 $bg_url=EPS_ASSETS_URL.'images/waves.gif';
-            }
-            ?>
-            <img src="<?php echo $bg_url; ?>" width="100" height="50" />
+
+                ?>
+                <img src="<?php echo $bg_url; ?>" width="100" height="50" />
+            </div>
+            <div id="used_sbg_img" class="hide_all_bg">
+                <?php
+                if($sliderId && get_post_meta($sliderId, 'eps-slider_bg', true)){
+                    $bg_url=get_post_meta($this->slider->id, 'eps-
+                    ', true);
+                    echo '<img src="'.$bg_url.'" id="sbg_upload_img" width="100" height="50" />';
+                    $imgtitle='Change';
+                } else{
+                    $imgtitle='Upload';
+                }
+                ?>
+                <a href='#' class='button alignright add-bg' data-editor='content' title='<?php echo $imgtitle; ?>' style="margin-top: 14px;">
+                    <span class='wp-media-buttons-icon'></span> <?php echo $imgtitle; ?>
+                </a>
+            </div>
+            <div id="used_sbg_color" class="hide_all_bg">
+                <label class='option' ><input  class='option settingColorSelector' type='text' name="settings[sbg_color]" value="<?php echo $this->slider->get_setting('sbg_color'); ?>" size="3" css-prop="color" /></label>
+            </div>
         </div>
-        <a href='#' class='button alignright add-bg' data-editor='content' title='<?php _e("Change", $this->filename) ?>' style="margin-top: 14px;">
-            <span class='wp-media-buttons-icon'></span> <?php _e("Change", $this->filename) ?>
-        </a>
+
     </td>
 </tr>
 <tr>
@@ -423,3 +447,4 @@ if (!$sliderId) {
 </div>
 </form>
 </div>
+
