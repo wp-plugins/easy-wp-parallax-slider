@@ -8,7 +8,7 @@ class epsAdminSlider extends epsSliderImageClass {
     private $font_style_array=array('bold','italic','underline');
 
     public function __construct() {
-        session_start();
+        if(!session_id()) session_start();
         $pluginmenu=explode('/',plugin_basename(__FILE__));
         $this->filename=$pluginmenu[0];
         add_filter('eps_get_image_slide', array($this, 'eps_get_slide'), 10, 2);

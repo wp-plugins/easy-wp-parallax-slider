@@ -64,6 +64,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.7 =
+
+* [fixed] session already sent issue
+
 = 1.6.6 =
 
 * [Update] New option to choose the background of slider, now you can add custom background color too.
