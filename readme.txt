@@ -64,6 +64,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.6.8 =
+
+* [Update] implemented the core color picker, removed the external files.
+
 = 1.6.7 =
 
 * [fixed] session already sent issue
