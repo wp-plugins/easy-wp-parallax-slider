@@ -161,6 +161,14 @@ if (!$sliderId) {
     </td>
 </tr>
 <tr>
+    <td class='tipsy-tooltip' title="<?php _e("Show box shadow of slider", $this->filename) ?>">
+        <?php _e("Box shadow", $this->filename) ?>
+    </td>
+    <td>
+        <input class='option' type='checkbox' name="settings[bshadow]" <?php if ($this->slider->get_setting('bshadow') == 'true') echo 'checked=checked' ?> />
+    </td>
+</tr>
+<tr>
     <td class='tipsy-tooltip' title="<?php _e("(parallax effect) when sliding", $this->filename) ?>">
         <?php _e("Bg position increment", $this->filename) ?>
     </td>
