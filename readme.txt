@@ -4,7 +4,7 @@ Link: http://www.osCitasthemes.com
 Tags: Wordpress Slider, Wordpress Parallax Slider, Parallax Slider, CSS3 Slider, drag, drop, touch, touch based slider, responsive slider,touch responsive slider
 Requires at least: 3.5
 Tested up to: 3.6.1
-Stable tag: 3.7
+Stable tag: 1.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -20,7 +20,7 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 
 * Multiple Sliders.
 * Drag n drop admin.
-* Touch enabled slider for mobiles
+* Touch enabled slider for mobiles.
 * Generate shortcode and do shortcode functionality.
 * Different background and css for every slider.
 * Option for heading, caption and link for every slide.
@@ -41,7 +41,6 @@ Follow us [@Twitter](https://twitter.com/oscitasthemes), [@facebook](https://www
 
 
 Credits: [Meta Slider](http://wordpress.org/plugins/ml-slider/) (Some admin code & functionality)
-
 
 == Installation ==
 
@@ -64,6 +63,10 @@ It's that simple ... just what the name suggests
 
 
 == Changelog ==
+
+= 1.7.0 =
+
+* [New] New Option to Show the shadow of Slider or not.
 
 = 1.6.8 =
 
