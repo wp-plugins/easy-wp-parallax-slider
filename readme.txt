@@ -64,6 +64,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.7.1 =
+
+* [Fixes] CSS Fixed for Settings Panel with WP 3.8 Compability .
+
 = 1.7.0 =
 
 * [New] New Option to Show the shadow of Slider or not.

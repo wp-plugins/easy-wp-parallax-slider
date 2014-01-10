@@ -80,11 +80,12 @@ if (!$sliderId) {
 </tr>
 
 <tr>
-    <td width='50%' class='tipsy-tooltip' title="<?php _e("Set the default background  for slider.", $this->filename) ?>">
+    <td width='115px' class='tipsy-tooltip' title="<?php _e("Set the default background  for slider.",
+        $this->filename) ?>">
         <?php _e("Background", $this->filename) ?>
         <input class="select-slider" id='flex' rel='flex' type='hidden' name="settings[type]" value='flex' />
     </td>
-    <td width="100%">
+    <td>
         <input class='option check_sbg' type='radio' id="sbg_def" name="settings[slider_bg_type]" <?php if ($this->slider->get_setting('slider_bg_type') == 'default') echo 'checked="checked"'; if($this->slider->get_setting('slider_bg_type')== false || $this->slider->get_setting('slider_bg_type')== '' || $this->slider->get_setting('slider_bg_type')== 'false')  { echo 'checked="checked"'; }?> value="default"/> <label class='option' for="sbg_def">Default</label>
         <input class='option check_sbg' type='radio' id="sbg_img" name="settings[slider_bg_type]" <?php if ($this->slider->get_setting('slider_bg_type') == 'image') echo 'checked="checked"' ?> value="image"/><label class='option' for="sbg_img">Upload Image</label>
         <input class='option check_sbg' type='radio' id="sbg_color" name="settings[slider_bg_type]" <?php if ($this->slider->get_setting('slider_bg_type') == 'color') echo 'checked="checked"' ?> value="color"/><label class='option' for="sbg_color">Color</label>
@@ -128,7 +129,7 @@ if (!$sliderId) {
         <?php _e("Size", $this->filename) ?>
     </td>
     <td>
-        <label class='option' >Width :</label><input type='number' min='1' max='100' step='1' size='3' class="width tipsytop" title='<?php _e("Width", $this->filename) ?>' name="settings[slider_width]" value='<?php echo ($this->slider->get_setting('slider_width')!= 'false' ? $this->slider->get_setting('slider_width') : 0) ?>' />px <label class='option' >&nbsp;</label>
+        <label class='option' >Width :</label><input type='number' min='1' max='100' step='1' size='3' class="width tipsytop" title='<?php _e("Width", $this->filename) ?>' name="settings[slider_width]" value='<?php echo ($this->slider->get_setting('slider_width')!= 'false' ? $this->slider->get_setting('slider_width') : 0) ?>' />px &nbsp;&nbsp;&nbsp;
         <label class='option' >Height :</label></label></label><input type='number' min='1' max='100' step='1' size='3' class="height tipsytop" title='<?php _e("Height", $this->filename) ?>' name="settings[slider_height]" value='<?php echo ($this->slider->get_setting('slider_height')!= 'false' ? $this->slider->get_setting('slider_height') : 0) ?>' />px
     </td>
 </tr>
