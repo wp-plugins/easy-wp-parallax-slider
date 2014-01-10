@@ -264,7 +264,8 @@
     margin-right: 5px;
 }
 .easy-parallax-slider .right .settings label {
-    margin-right: 10px;
+    margin-right: 5px;
+    display: inline-block;
 }
 .easy-parallax-slider .right .settings .slider-lib {
     float: left;
@@ -456,4 +457,27 @@ span.wp-picker-input-wrap .button-small{
 .easy-parallax-slider .iris-picker {
     position: absolute;
     z-index: 10;
+}
+
+/* --------------------------------- */
+.eps-slider-settings-tbl{
+    font-size: 12px;
+}
+.eps-slider-settings-tbl textarea,.eps-slider-settings-tbl input,.eps-slider-settings-tbl select{
+    font-size: 11px;
+}
+.eps-slider-settings-tbl select{
+    width: 180px;
+    padding: 3px;
+    height: 24px;
+}
+.easy-parallax-slider .right input[type="checkbox"],.easy-parallax-slider .right input[type="radio"]{
+    margin-right: 2px;
+    margin-top: 0;
+}
+.easy-parallax-slider .wp-color-result{
+    margin:0 ;
+}
+.easy-parallax-slider input{
+    padding: 1px 5px;
 }
