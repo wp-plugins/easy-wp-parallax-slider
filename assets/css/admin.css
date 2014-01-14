@@ -460,6 +460,10 @@ span.wp-picker-input-wrap .button-small{
 }
 
 /* --------------------------------- */
+.eps-colapsable-slider .iris-picker .iris-slider-offset,.eps-slider-settings-tbl .iris-picker .iris-slider-offset{
+    background: transparent;
+    border: none;
+}
 .eps-slider-settings-tbl{
     font-size: 12px;
 }
