@@ -6,9 +6,12 @@ class epsSliderClass {
     public $identifier = 0; // unique identifier
     public $slides = array(); //slides belonging to this slider
     public $settings = array(); // slider settings
+    public $eps_google_enqueue_scripts=array();
 
     function __construct($id='') {
-
+if(!session_id())
+    @session_start();
+        $_SESSION['enqueue_script']='';
         $this->id = $id;
 
         $this->settings = $this->eps_get_settings();
@@ -307,6 +310,9 @@ class epsSliderClass {
         if ($this->get_setting('printCss') == 'true') {
             wp_enqueue_style('eps-slider-public-css',EPS_ASSETS_URL . $this->publiccss_path,'',EPS_VERSION);
             wp_enqueue_style('eps-slider-font','http://fonts.googleapis.com/css?family=Economica:700,400italic','',EPS_VERSION);
+            if($_SESSION['enqueue_script']!=''){
+            wp_enqueue_style('dynamic_css',EPS_ASSETS_URL .'css/dynamic_css.php','',EPS_VERSION);
+            }
             wp_enqueue_style('eps-slider-css',EPS_ASSETS_URL . $this->css_path,'',EPS_VERSION);
 
         }
@@ -415,7 +421,36 @@ class epsSliderClass {
             $height='height:'.$this->get_setting('slider_height').'px;';
         }
 
+        if($this->get_setting('heading_font_family')=='Google Font'){
+            $heading_family='font-family:'.$this->get_setting('heading_google_font_family').';';
+            if(strpos($_SESSION['enqueue_script'],urlencode($this->get_setting('heading_google_font_family')))===false){
+                $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                $_SESSION['enqueue_script'].=$prefix.urlencode($this->get_setting('heading_google_font_family'));
+            }
 
+        }else{
+            $heading_family='font-family:'.$this->get_setting('heading_font_family').';';
+        }
+        if($this->get_setting('content_font_family')=='Google Font'){
+            $content_family='font-family:'.$this->get_setting('content_google_font_family').';';
+
+            if(strpos($_SESSION['enqueue_script'],urlencode($this->get_setting('content_google_font_family')))===false){
+                $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                $_SESSION['enqueue_script'].=$prefix.urlencode($this->get_setting('content_google_font_family'));
+            }
+        }else{
+            $content_family='font-family:'.$this->get_setting('content_font_family').';';
+        }
+        if($this->get_setting('readmore_font_family')=='Google Font'){
+            $readmore_family='font-family:'.$this->get_setting('readmore_google_font_family').';';
+
+            if(strpos($_SESSION['enqueue_script'],urlencode($this->get_setting('readmore_google_font_family')))===false){
+                $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                $_SESSION['enqueue_script'].=$prefix.urlencode($this->get_setting('readmore_google_font_family'));
+            }
+        }else{
+            $readmore_family='font-family:'.$this->get_setting('readmore_font_family').';';
+        }
         $bottom_navigations='';
         if ($this->get_setting('links') != 'true') {
             $bottom_navigations='display:none;';
@@ -434,7 +469,7 @@ class epsSliderClass {
         $readmore_font='text-decoration:none;';
 
         $heading_size='font-size:'.$this->get_setting('heading_font_size').'px;';
-        $heading_family='font-family:'.$this->get_setting('heading_font_family').';';
+
         $heading_color='color:'.$this->get_setting('heading_font_color').';';
         if($this->get_setting('heading_font_style')=='italic'){
             $heading_font='font-style:'.$this->get_setting('heading_font_style').';';
@@ -447,7 +482,7 @@ class epsSliderClass {
         }
 
         $content_size='font-size:'.$this->get_setting('content_font_size').'px;';
-        $content_family='font-family:'.$this->get_setting('content_font_family').';';
+
         $content_color='color:'.$this->get_setting('content_font_color').';';
         if($this->get_setting('content_font_style')=='italic'){
             $content_font='font-style:'.$this->get_setting('content_font_style').';';
@@ -460,7 +495,7 @@ class epsSliderClass {
         }
 
         $readmore_size='font-size:'.$this->get_setting('readmore_font_size').'px;';
-        $readmore_family='font-family:'.$this->get_setting('readmore_font_family').';';
+
         $readmore_color='color:'.$this->get_setting('readmore_font_color').';';
         $readmore_bgcolor='background-color:'.$this->get_setting('readmore_bg_color').';';
         $readmore_bordercolor='border-color:'.$this->get_setting('readmore_border_color').';';

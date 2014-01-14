@@ -2,9 +2,10 @@
 //$this->eps_admin_process();
 $sliderId = $this->slider->id;
 
-$font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco');
+$font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font');
 
 $font_style_array=array('bold','italic','underline');
+global $eps_google_font_family;
 ?>
 
 <script type='text/javascript'>
@@ -202,9 +203,22 @@ if (!$sliderId) {
         <?php _e("Font Family", $this->filename) ?>
     </td>
     <td>
-        <select class='option' name="settings[heading_font_family]" >
+        <select class='option check_google_font' show-attr="heading_google" name="settings[heading_font_family]" >
             <?php foreach($font_family_array as $heading_font_family_value){
                 echo '<option value="'.$heading_font_family_value.'" '.($this->slider->get_setting('heading_font_family')==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
+            }?>
+
+        </select>
+    </td>
+</tr>
+<tr class="heading_google">
+    <td class='tipsy-tooltip' title="<?php _e("Set slide heading google font family", $this->filename) ?>">
+        <?php _e("Google Font", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[heading_google_font_family]" >
+            <?php foreach($eps_google_font_family as $google_font_family_value){
+                echo '<option value="'.$google_font_family_value.'" '.($this->slider->get_setting('heading_google_font_family')==$google_font_family_value?'selected="selected"':'').'>'.$google_font_family_value.'</option>';
             }?>
 
         </select>
@@ -267,12 +281,25 @@ if (!$sliderId) {
         <?php _e("Font Family", $this->filename) ?>
     </td>
     <td>
-        <select class='option' name="settings[content_font_family]" >
+        <select class='option check_google_font' show-attr="content_google" name="settings[content_font_family]" >
             <?php foreach($font_family_array as $content_font_family_value){
                 echo '<option value="'.$content_font_family_value.'" '.($this->slider->get_setting('content_font_family')==$content_font_family_value?'selected="selected"':'').'>'.$content_font_family_value.'</option>';
             }?>
         </select>
 
+    </td>
+</tr>
+<tr class="content_google">
+    <td class='tipsy-tooltip' title="<?php _e("Set slide content google font family", $this->filename) ?>">
+        <?php _e("Google Font", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[content_google_font_family]" >
+            <?php foreach($eps_google_font_family as $google_font_family_value){
+                echo '<option value="'.$google_font_family_value.'" '.($this->slider->get_setting('content_google_font_family')==$google_font_family_value?'selected="selected"':'').'>'.$google_font_family_value.'</option>';
+            }?>
+
+        </select>
     </td>
 </tr>
 <tr>
@@ -315,10 +342,23 @@ if (!$sliderId) {
         <?php _e("Font Family", $this->filename) ?>
     </td>
     <td>
-        <select class='option' name="settings[readmore_font_family]" >
+        <select class='option check_google_font' show-attr="readmore_google" name="settings[readmore_font_family]" >
             <?php foreach($font_family_array as $readmore_font_family_value){
                 echo '<option value="'.$readmore_font_family_value.'" '.($this->slider->get_setting('readmore_font_family')==$readmore_font_family_value?'selected="selected"':'').'>'.$readmore_font_family_value.'</option>';
             }?>
+        </select>
+    </td>
+</tr>
+<tr class="readmore_google">
+    <td class='tipsy-tooltip' title="<?php _e("Set slide read more link google font family", $this->filename) ?>">
+        <?php _e("Google Font", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[readmore_google_font_family]" >
+            <?php foreach($eps_google_font_family as $google_font_family_value){
+                echo '<option value="'.$google_font_family_value.'" '.($this->slider->get_setting('readmore_google_font_family')==$google_font_family_value?'selected="selected"':'').'>'.$google_font_family_value.'</option>';
+            }?>
+
         </select>
     </td>
 </tr>

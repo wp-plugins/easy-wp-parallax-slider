@@ -4,7 +4,7 @@ class epsAdminSlider extends epsSliderImageClass {
      * Register slide type
      */
     private $filename= null;
-    private $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco');
+    private $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font');
     private $font_style_array=array('bold','italic','underline');
 
     public function __construct() {
@@ -54,7 +54,7 @@ class epsAdminSlider extends epsSliderImageClass {
      */
     protected function eps_get_admin_slide() {
 
-        $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco');
+        $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font');
 
         // get some slide settings
         $thumb   = $this->eps_get_thumb();
@@ -80,6 +80,11 @@ class epsAdminSlider extends epsSliderImageClass {
         $heading_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_family', true);
         $readmore_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_family', true);
         $content_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_family', true);
+
+        $readmore_google_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_google_font_family', true);
+        $content_google_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_google_font_family', true);
+        $heading_google_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_google_font_family', true);
+
         $heading_font_style=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_style', true);
         $readmore_font_style=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_style', true);
         $content_font_style=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_style', true);
@@ -103,6 +108,7 @@ class epsAdminSlider extends epsSliderImageClass {
         $str_font_top_margin = __("Top Margin", $this->filename);
         $str_font_size = __("Font Size", $this->filename);
         $str_font_family = __("Font Family", $this->filename);
+        $str_google_font_family = __("Google Font", $this->filename);
         $str_font_style = __("Font Style", $this->filename);
         $str_font_color = __("Font Color", $this->filename);
         $str_bg_color = __("BG Color", $this->filename);
@@ -137,6 +143,10 @@ class epsAdminSlider extends epsSliderImageClass {
         $readmore_font_family = $this->_osc_create_font_family_select($readmore_font_family);
         $content_font_family = $this->_osc_create_font_family_select($content_font_family);
 
+        $heading_google_font_family=$this->_osc_create_google_font_family_select($heading_google_font_family);
+        $readmore_google_font_family = $this->_osc_create_google_font_family_select($readmore_google_font_family);
+        $content_google_font_family = $this->_osc_create_google_font_family_select($content_google_font_family);
+
         $heading_font_style = $this->_osc_create_font_style_select($heading_font_style);
         $readmore_font_style = $this->_osc_create_font_style_select($readmore_font_style);
         $content_font_style = $this->_osc_create_font_style_select($content_font_style);
@@ -160,7 +170,12 @@ class epsAdminSlider extends epsSliderImageClass {
             </tr>
             <tr>
                 <td>
-                    <label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_font_family]'>$heading_font_family</select>
+                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_heading_google" name='attachment[{$this->slide->ID}][heading_font_family]'>{$heading_font_family}</select>
+                </td>
+            </tr>
+            <tr class="single_heading_google">
+                <td>
+                    <label>{$str_google_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_google_font_family]'>{$heading_google_font_family}</select>
                 </td>
             </tr>
             <tr>
@@ -191,7 +206,12 @@ class epsAdminSlider extends epsSliderImageClass {
             </tr>
             <tr>
                 <td>
-                    <label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][content_font_family]'>$content_font_family</select>
+                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_content_google" name='attachment[{$this->slide->ID}][content_font_family]'>$content_font_family</select>
+                </td>
+            </tr>
+            <tr class="single_content_google">
+                <td>
+                    <label>{$str_google_font_family}</label> <select name='attachment[{$this->slide->ID}][content_google_font_family]'>{$content_google_font_family}</select>
                 </td>
             </tr>
             <tr>
@@ -230,7 +250,12 @@ EOS;
             </tr>
             <tr>
                 <td>
-                    <label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_font_family]'>$readmore_font_family</select>
+                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_readmore_google" name='attachment[{$this->slide->ID}][readmore_font_family]'>$readmore_font_family</select>
+                </td>
+            </tr>
+            <tr class="single_readmore_google">
+                <td>
+                    <label>{$str_google_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_google_font_family]'>{$readmore_google_font_family}</select>
                 </td>
             </tr>
             <tr>
@@ -281,62 +306,6 @@ EOS;
 
 EOS;
 
-
-        //$row.='<tr><td><h4 class="slide-settings">Slide Heading Settings</h4></td><td><h4 class="slide-settings">Slide Read More Settings</h4></td></tr>';
-        //$row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][heading_font_size]' value='{$heading_font_size}' /></td><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][readmore_font_size]' value='{$readmore_font_size}' /></td></tr>";
-//        $row .= "<tr><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_font_family]'>";
-//        foreach($font_family_array as $heading_font_family_value){
-//            $row.='<option value="'.$heading_font_family_value.'" '.($heading_font_family==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
-//        }
-//        $row.="</select></td><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_font_family]'>";
-//        foreach($font_family_array as $heading_font_family_value){
-//            $row.='<option value="'.$heading_font_family_value.'" '.($readmore_font_family==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
-//        }
-//        $row.="</select></td></tr>";
-//        $row .= "<tr><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][heading_font_style]'>";
-//        foreach($font_style_array as $font_style_value){
-//            $row.='<option value="'.$font_style_value.'" '.($heading_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
-//        }
-//        $row.="</select></td><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][readmore_font_style]'>";
-//        foreach($font_style_array as $font_style_value){
-//            $row.='<option value="'.$font_style_value.'" '.($readmore_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
-//        }
-//        $row.="</select></td></tr>";
-//        $row .= "<tr><td><label>{$str_font_color}</label>
-//                <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][heading_font_color]' value='{$heading_font_color}'/>
-//                </td>";
-//        $row .= "<td><label>{$str_font_color}</label>
-//                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_font_color]' value='{$readmore_font_color}'/>
-//                </td><tr>";
-//
-//
-//
-//        $row.='<tr><td><h4 class="slide-settings">Slide Content Settings</h4></td>';
-//        $row.="<td><label>{$str_bg_color}</label><input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_bg_color]' value='{$readmore_bg_color}'/></td></td></tr>";
-//        //$row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_font_size]' value='{$content_font_size}' /></td><td><label>{$str_border_color}</label>";
-//
-//        $row .= "<tr><td><label>{$str_font_size}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][content_font_size]' value='{$content_font_size}' /></td><td><label>{$str_border_color}</label>
-//                 <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][readmore_border_color]' value='{$readmore_border_color}'/></td></tr>";
-//        $row .= "<tr><td><label>{$str_font_family}</label> <select name='attachment[{$this->slide->ID}][content_font_family]'>";
-//        foreach($font_family_array as $content_font_family_value){
-//            $row.='<option value="'.$content_font_family_value.'" '.($content_font_family==$content_font_family_value?'selected="selected"':'').'>'.$content_font_family_value.'</option>';
-//        }
-//        $row.="</select></td><td><h4 class='slide-settings'>Slide Image Settings</h4></td></tr>";
-//        $row .= "<tr><td><label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][content_font_style]'>";
-//        foreach($font_style_array as $font_style_value){
-//            $row.='<option value="'.$font_style_value.'" '.($content_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
-//        }
-//        $row.="</select></td><td><label>{$str_top}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_top]' value='{$image_top}' />%</td></tr>";
-//        $row .= "<tr><td><label>{$str_font_color}</label>
-//                <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][content_font_color]' value='{$content_font_color}'/>
-//                </td>";
-//        $row .= "<td><label>{$str_left}</label><input class='option' type='number' min='1' max='100' step='1' name='attachment[{$this->slide->ID}][image_left]' value='{$image_left}' />%
-//                </td></tr>";
-//        $row .= "<tr><td><label>{$str_line_height}</label>
-//                <input  class='option' type='text' name='attachment[{$this->slide->ID}][content_line_height]' value='{$content_line_height}'/>
-//                </td>";
-//        $row .= "<td><label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;<label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
-//                </td></tr>";
         $row .= "    </table></div>";
         $row .= "    </div>";
         $row .= "    </td>";
@@ -356,7 +325,14 @@ EOS;
         }
         return $html;
     }
-
+    protected function _osc_create_google_font_family_select($selected_font_family='') {
+        $html = '';
+        global $eps_google_font_family;
+        foreach($eps_google_font_family as $font_family_value){
+            $html .='<option value="'.$font_family_value.'" '.($selected_font_family==$font_family_value?'selected="selected"':'').'>'.$font_family_value.'</option>';
+        }
+        return $html;
+    }
     protected function _osc_create_font_style_select($selected_font_style='') {
         $html = '';
         foreach($this->font_style_array as $font_style_value){
@@ -410,8 +386,11 @@ EOS;
             'content_top_margin'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_top_margin', true),
             'content_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_size', true),
             'heading_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_family', true),
+            'heading_google_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_google_font_family', true),
             'readmore_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_family', true),
+            'readmore_google_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_google_font_family', true),
             'content_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_family', true),
+            'content_google_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_google_font_family', true),
             'heading_font_style'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_style', true),
             'readmore_font_style'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_style', true),
             'content_font_style'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_style', true),
@@ -433,9 +412,53 @@ EOS;
     }
 
     private function eps_get_parallax_slider_markup_style($slide){
+        global $eps_google_enqueue_scripts;
+        if($slide['heading_font_family']!=false || $slide['heading_font_family']!=''){
+            if($slide['heading_font_family']=='Google Font'){
+                $heading_font_family= 'font-family:'.$slide['heading_google_font_family'].';';
+                if(strpos($_SESSION['enqueue_script'],urlencode($slide['heading_google_font_family']))===false){
+                $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                $_SESSION['enqueue_script'].=$prefix.urlencode($slide['heading_google_font_family']);
+                }
+            }else{
+                $heading_font_family='font-family:'.$slide['heading_font_family'].';';
+            }
+        }
+        else{
+            $heading_font_family= '';
+        }
+        if($slide['content_font_family']!=false || $slide['content_font_family']!=''){
+            if($slide['content_font_family']=='Google Font'){
+                $content_font_family= 'font-family:'.$slide['content_google_font_family'].';';
 
+                if(strpos($_SESSION['enqueue_script'],urlencode($slide['content_google_font_family']))===false){
+                    $prefix= $_SESSION['enqueue_script']==''?'':'|';
+
+                $_SESSION['enqueue_script'].=$prefix.urlencode($slide['content_google_font_family']);
+                }
+            }else{
+                $content_font_family='font-family:'.$slide['content_font_family'].';';
+            }
+        }
+        else{
+            $content_font_family= '';
+        }
+        if($slide['readmore_font_family']!=false || $slide['readmore_font_family']!=''){
+            if($slide['readmore_font_family']=='Google Font'){
+                $readmore_font_family= 'font-family:'.$slide['readmore_google_font_family'].';';
+                if(strpos($_SESSION['enqueue_script'],urlencode($slide['readmore_google_font_family']))===false){
+               $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                $_SESSION['enqueue_script'].=$prefix.urlencode($slide['readmore_google_font_family']);
+                }
+            }else{
+                $readmore_font_family='font-family:'.$slide['readmore_font_family'].';';
+            }
+        }
+        else{
+            $readmore_font_family= '';
+        }
         $heading_font_size=($slide['heading_font_size']!=false || $slide['heading_font_size']!=0)?'font-size:'.$slide['heading_font_size'].'px;':'';
-        $heading_font_family=($slide['heading_font_family']!=false || $slide['heading_font_family']!='')?'font-family:'.$slide['heading_font_family'].';':'';
+
         $heading_font_color=($slide['heading_font_color']!=false || $slide['heading_font_color']!='')?'color:'.$slide['heading_font_color'].';':'';
         if($slide['heading_font_style']=='italic'){
             $heading_font_style='font-style:'.$slide['heading_font_style'].';';
@@ -448,7 +471,7 @@ EOS;
         }
         $content_top_margin=($slide['content_top_margin']!=false || $slide['content_top_margin']!='')?'margin-top:'.$slide['content_top_margin'].'px;':'';
         $content_font_size=($slide['content_font_size']!=false || $slide['content_font_size']!='')?'font-size:'.$slide['content_font_size'].'px;':'';
-        $content_font_family='font-family:'.$slide['content_font_family'].';';
+
         $content_font_color=($slide['content_font_color']!=false || $slide['content_font_color']!='')?'color:'.$slide['content_font_color'].';':'';
         $content_line_height=($slide['content_line_height']!=false || $slide['content_line_height']!='')?'line-height:'.$slide['content_line_height'].';':'';
         if($slide['content_font_style']=='italic'){
@@ -461,7 +484,7 @@ EOS;
             $content_font_style='font-weight:'.$slide['content_font_style'].';';
         }
         $readmore_font_size=($slide['readmore_font_size']!=false || $slide['readmore_font_size']!='')?'font-size:'.$slide['readmore_font_size'].'px;':'';
-        $readmore_font_family=($slide['readmore_font_family']!=false || $slide['readmore_font_family']!='')?'font-family:'.$slide['readmore_font_family'].';':'';
+
         $readmore_font_color=($slide['readmore_font_color']!=false || $slide['readmore_font_color']!='')?'color:'.$slide['readmore_font_color'].';':'';
         if($slide['readmore_font_style']=='italic'){
             $readmore_font_style='font-style:'.$slide['readmore_font_style'].';';
@@ -764,6 +787,9 @@ EOF;
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_font_family', $fields['heading_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_font_family', $fields['readmore_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_font_family', $fields['content_font_family']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_google_font_family', $fields['heading_google_font_family']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_google_font_family', $fields['readmore_google_font_family']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_google_font_family', $fields['content_google_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_font_style', $fields['heading_font_style']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_font_style', $fields['readmore_font_style']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_font_style', $fields['content_font_style']);

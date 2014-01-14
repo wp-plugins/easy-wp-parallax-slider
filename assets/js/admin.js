@@ -6,11 +6,33 @@ function apply_aacordion(data){
     jQuery(data).accordion({
         icons: icons,
         collapsible: true,
-        active:false
+        active:false,
+        activate: function( event, ui ){
+            var $this=jQuery(this);
+            $this.find('.check_google_font').each(function(){
+                show_google_font(jQuery(this));
+            });
+        }
     });
+}
+function show_google_font(ele){
+    var show= ele.attr('show-attr')
+    if(ele.val()=='Google Font'){
+        jQuery('.'+show).show();
+    }else{
+    jQuery('.'+show).hide();
+    }
+    jQuery('.eps-slider-settings-tbl tr:visible:even').css('background-color', '#F1F1F1');
+    jQuery('.eps-slider-settings-tbl tr:visible:odd').css('background-color', '#F9F9F9');
 }
 jQuery(document).ready(function($) {
     apply_aacordion(".eps-colapsable-slider");
+    jQuery('.check_google_font').each(function(){
+        show_google_font(jQuery(this));
+    });
+    jQuery('.check_google_font').live('change',function(){
+        show_google_font(jQuery(this));
+    });
     // Enable the correct options for this slider type
     var switchType = function(slider) {
         jQuery('.easy-parallax-slider .option:not(.' + slider + ')').attr('disabled', 'disabled').parents('tr').hide();
@@ -82,7 +104,7 @@ jQuery(document).ready(function($) {
             jQuery(".easy-parallax-slider input[type=submit]").removeAttr('disabled');
         }
 
-        setTimeout(checkPendingRequest, 1000); 
+        setTimeout(checkPendingRequest, 1000);
     }
 
     checkPendingRequest();
@@ -91,13 +113,13 @@ jQuery(document).ready(function($) {
     var getLightboxWidth = function() {
         var widthval=jQuery('input.width').val();
         var width = parseInt(widthval, 10) + 'px';
-if(widthval=='' || widthval==0){
-    width='80%';
-}
+        if(widthval=='' || widthval==0){
+            width='80%';
+        }
         if (jQuery('#carouselMode').is(':checked')) {
             width = '75%';
         }
-        
+
         return width;
     };
 
@@ -131,7 +153,7 @@ if(widthval=='' || widthval==0){
         jQuery(".easy-parallax-slider .spinner").show();
         jQuery(".easy-parallax-slider input[type=submit]").attr('disabled', 'disabled');
 
-        jQuery.ajax({   
+        jQuery.ajax({
             type: "POST",
             data : data,
             cache: false,
@@ -154,7 +176,7 @@ if(widthval=='' || widthval==0){
                         fastIframe: false
                     });
                 }
-            }   
+            }
         });
     });
 
