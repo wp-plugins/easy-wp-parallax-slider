@@ -2,9 +2,9 @@
 //$this->eps_admin_process();
 $sliderId = $this->slider->id;
 
-$font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font');
+$font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font','Other');
 
-$font_style_array=array('bold','italic','underline');
+$font_style_array=array('none','bold','italic','underline');
 global $eps_google_font_family;
 ?>
 
@@ -14,7 +14,6 @@ global $eps_google_font_family;
 
 <div class="wrap easy-parallax-slider">
 <form accept-charset="UTF-8" action="?page=<?php echo $this->filename;?>&id=<?php echo $sliderId ?>" method="post">
-
 <h2 class="nav-tab-wrapper">
     <?php
 
@@ -203,7 +202,7 @@ if (!$sliderId) {
         <?php _e("Font Family", $this->filename) ?>
     </td>
     <td>
-        <select class='option check_google_font' show-attr="heading_google" name="settings[heading_font_family]" >
+        <select class='option check_google_font' show-attr="heading_google" other-attr="heading_other"  name="settings[heading_font_family]" >
             <?php foreach($font_family_array as $heading_font_family_value){
                 echo '<option value="'.$heading_font_family_value.'" '.($this->slider->get_setting('heading_font_family')==$heading_font_family_value?'selected="selected"':'').'>'.$heading_font_family_value.'</option>';
             }?>
@@ -212,7 +211,7 @@ if (!$sliderId) {
     </td>
 </tr>
 <tr class="heading_google">
-    <td class='tipsy-tooltip' title="<?php _e("Set slide heading google font family", $this->filename) ?>">
+    <td class='tipsy-tooltip' title="<?php _e("Set slide heading google font", $this->filename) ?>">
         <?php _e("Google Font", $this->filename) ?>
     </td>
     <td>
@@ -224,15 +223,22 @@ if (!$sliderId) {
         </select>
     </td>
 </tr>
+<tr class="heading_other">
+    <td class='tipsy-tooltip' title="<?php _e("Provide name of your desired font, to add multiple fonts separate them by comma(,)", $this->filename) ?>">
+        <?php _e("Other Fonts", $this->filename) ?>
+    </td>
+    <td>
+        <input class='option' type='text'  name="settings[heading_other_font_family]" value="<?php echo $this->slider->get_setting('heading_other_font_family'); ?>" />
+    </td>
+</tr>
 <tr>
     <td class='tipsy-tooltip' title="<?php _e("Set slide heading font Style", $this->filename) ?>">
         <?php _e("Font Style", $this->filename) ?>
     </td>
     <td>
-        <select class='option' name="settings[heading_font_style]" >
-            <option value=''></option>
+        <select class='option' name="settings[heading_font_style][]" multiple>
             <?php foreach($font_style_array as $heading_font_style_value){
-                echo '<option value="'.$heading_font_style_value.'" '.($this->slider->get_setting('heading_font_style')==$heading_font_style_value?'selected="selected"':'').'>'.$heading_font_style_value.'</option>';
+                echo '<option value="'.$heading_font_style_value.'" '.(is_array($this->slider->get_setting('heading_font_style')) && in_array($heading_font_style_value,$this->slider->get_setting('heading_font_style'))?'selected="selected"':'').'>'.$heading_font_style_value.'</option>';
             }?>
         </select>
     </td>
@@ -281,7 +287,7 @@ if (!$sliderId) {
         <?php _e("Font Family", $this->filename) ?>
     </td>
     <td>
-        <select class='option check_google_font' show-attr="content_google" name="settings[content_font_family]" >
+        <select class='option check_google_font' show-attr="content_google" other-attr="content_other" name="settings[content_font_family]" >
             <?php foreach($font_family_array as $content_font_family_value){
                 echo '<option value="'.$content_font_family_value.'" '.($this->slider->get_setting('content_font_family')==$content_font_family_value?'selected="selected"':'').'>'.$content_font_family_value.'</option>';
             }?>
@@ -302,15 +308,22 @@ if (!$sliderId) {
         </select>
     </td>
 </tr>
+<tr class="content_other">
+    <td class='tipsy-tooltip' title="<?php _e("Provide name of your desired font, to add multiple fonts separate them by comma(,)", $this->filename) ?>">
+        <?php _e("Other Fonts", $this->filename) ?>
+    </td>
+    <td>
+        <input  type='text'  name="settings[content_other_font_family]" value="<?php echo $this->slider->get_setting('content_other_font_family'); ?>" />
+    </td>
+</tr>
 <tr>
     <td class='tipsy-tooltip' title="<?php _e("Set slide content font style", $this->filename) ?>">
         <?php _e("Font style", $this->filename) ?>
     </td>
     <td>
-        <select class='option' name="settings[content_font_style]" >
-            <option value=''></option>
+        <select class='option' name="settings[content_font_style][]" multiple>
             <?php foreach($font_style_array as $content_font_style_value){
-                echo '<option value="'.$content_font_style_value.'" '.($this->slider->get_setting('content_font_style')==$content_font_style_value?'selected="selected"':'').'>'.$content_font_style_value.'</option>';
+                echo '<option value="'.$content_font_style_value.'" '.(is_array($this->slider->get_setting('content_font_style')) && in_array($content_font_style_value,$this->slider->get_setting('content_font_style'))?'selected="selected"':'').'>'.$content_font_style_value.'</option>';
             }?>
         </select>
     </td>
@@ -342,7 +355,7 @@ if (!$sliderId) {
         <?php _e("Font Family", $this->filename) ?>
     </td>
     <td>
-        <select class='option check_google_font' show-attr="readmore_google" name="settings[readmore_font_family]" >
+        <select class='option check_google_font' show-attr="readmore_google" other-attr="readmore_other" name="settings[readmore_font_family]" >
             <?php foreach($font_family_array as $readmore_font_family_value){
                 echo '<option value="'.$readmore_font_family_value.'" '.($this->slider->get_setting('readmore_font_family')==$readmore_font_family_value?'selected="selected"':'').'>'.$readmore_font_family_value.'</option>';
             }?>
@@ -362,15 +375,22 @@ if (!$sliderId) {
         </select>
     </td>
 </tr>
+<tr class="readmore_other">
+    <td class='tipsy-tooltip' title="<?php _e("Provide name of your desired font, to add multiple fonts separate them by comma(,)", $this->filename) ?>">
+        <?php _e("Other Fonts", $this->filename) ?>
+    </td>
+    <td>
+        <input class='option' type='text'  name="settings[readmore_other_font_family]" value="<?php echo $this->slider->get_setting('readmore_other_font_family'); ?>" />
+    </td>
+</tr>
 <tr>
     <td class='tipsy-tooltip' title="<?php _e("Set slide read more font style", $this->filename) ?>">
         <?php _e("Font style", $this->filename) ?>
     </td>
     <td>
-        <select class='option' name="settings[readmore_font_style]" >
-            <option value=''></option>
+        <select class='option' name="settings[readmore_font_style][]" multiple>
             <?php foreach($font_style_array as $readmore_font_style_value){
-                echo '<option value="'.$readmore_font_style_value.'" '.($this->slider->get_setting('readmore_font_style')==$readmore_font_style_value?'selected="selected"':'').'>'.$readmore_font_style_value.'</option>';
+                echo '<option value="'.$readmore_font_style_value.'" '.(is_array($this->slider->get_setting('readmore_font_style')) && in_array($readmore_font_style_value,$this->slider->get_setting('readmore_font_style'))?'selected="selected"':'').'>'.$readmore_font_style_value.'</option>';
             }?>
         </select>
     </td>

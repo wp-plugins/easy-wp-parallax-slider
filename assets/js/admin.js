@@ -17,10 +17,16 @@ function apply_aacordion(data){
 }
 function show_google_font(ele){
     var show= ele.attr('show-attr')
+    var other= ele.attr('other-attr')
     if(ele.val()=='Google Font'){
         jQuery('.'+show).show();
-    }else{
-    jQuery('.'+show).hide();
+        jQuery('.'+other).hide();
+    }else if(ele.val()=='Other'){
+        jQuery('.'+other).show();
+        jQuery('.'+show).hide();
+    } else{
+        jQuery('.'+other).hide();
+        jQuery('.'+show).hide();
     }
     jQuery('.eps-slider-settings-tbl tr:visible:even').css('background-color', '#F1F1F1');
     jQuery('.eps-slider-settings-tbl tr:visible:odd').css('background-color', '#F9F9F9');

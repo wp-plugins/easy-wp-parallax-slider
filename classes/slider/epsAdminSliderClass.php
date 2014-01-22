@@ -4,7 +4,7 @@ class epsAdminSlider extends epsSliderImageClass {
      * Register slide type
      */
     private $filename= null;
-    private $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font');
+    private $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font','Other');
     private $font_style_array=array('bold','italic','underline');
 
     public function __construct() {
@@ -85,6 +85,10 @@ class epsAdminSlider extends epsSliderImageClass {
         $content_google_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_google_font_family', true);
         $heading_google_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_google_font_family', true);
 
+        $readmore_other_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_other_font_family', true);
+        $content_other_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_other_font_family', true);
+        $heading_other_font_family=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_other_font_family', true);
+
         $heading_font_style=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_style', true);
         $readmore_font_style=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_style', true);
         $content_font_style=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_style', true);
@@ -109,6 +113,7 @@ class epsAdminSlider extends epsSliderImageClass {
         $str_font_size = __("Font Size", $this->filename);
         $str_font_family = __("Font Family", $this->filename);
         $str_google_font_family = __("Google Font", $this->filename);
+        $str_other_font_family = __("Other Font", $this->filename);
         $str_font_style = __("Font Style", $this->filename);
         $str_font_color = __("Font Color", $this->filename);
         $str_bg_color = __("BG Color", $this->filename);
@@ -170,7 +175,7 @@ class epsAdminSlider extends epsSliderImageClass {
             </tr>
             <tr>
                 <td>
-                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_heading_google" name='attachment[{$this->slide->ID}][heading_font_family]'>{$heading_font_family}</select>
+                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_heading_google" other-attr="single_heading_other" name='attachment[{$this->slide->ID}][heading_font_family]'>{$heading_font_family}</select>
                 </td>
             </tr>
             <tr class="single_heading_google">
@@ -178,9 +183,14 @@ class epsAdminSlider extends epsSliderImageClass {
                     <label>{$str_google_font_family}</label> <select name='attachment[{$this->slide->ID}][heading_google_font_family]'>{$heading_google_font_family}</select>
                 </td>
             </tr>
+            <tr class="single_heading_other">
+                <td>
+                    <label>{$str_other_font_family}</label> <input class='option' type='text'  name="attachment[{$this->slide->ID}][heading_other_font_family]" value="{$heading_other_font_family}" />
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][heading_font_style]'>$heading_font_style</select>
+                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][heading_font_style][]' multiple>$heading_font_style</select>
                 </td>
             </tr>
             <tr>
@@ -206,7 +216,7 @@ class epsAdminSlider extends epsSliderImageClass {
             </tr>
             <tr>
                 <td>
-                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_content_google" name='attachment[{$this->slide->ID}][content_font_family]'>$content_font_family</select>
+                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_content_google" other-attr="single_content_other" name='attachment[{$this->slide->ID}][content_font_family]'>$content_font_family</select>
                 </td>
             </tr>
             <tr class="single_content_google">
@@ -214,9 +224,14 @@ class epsAdminSlider extends epsSliderImageClass {
                     <label>{$str_google_font_family}</label> <select name='attachment[{$this->slide->ID}][content_google_font_family]'>{$content_google_font_family}</select>
                 </td>
             </tr>
+            <tr class="single_content_other">
+                <td>
+                    <label>{$str_other_font_family}</label> <input class='option' type='text'  name="attachment[{$this->slide->ID}][content_other_font_family]" value="{$content_other_font_family}" />
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][content_font_style]'>$content_font_style
+                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][content_font_style][]' multiple>$content_font_style
                 </td>
             </tr>
             <tr>
@@ -250,7 +265,7 @@ EOS;
             </tr>
             <tr>
                 <td>
-                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_readmore_google" name='attachment[{$this->slide->ID}][readmore_font_family]'>$readmore_font_family</select>
+                    <label>{$str_font_family}</label> <select class="check_google_font" show-attr="single_readmore_google" other-attr="single_readmore_other" name='attachment[{$this->slide->ID}][readmore_font_family]'>$readmore_font_family</select>
                 </td>
             </tr>
             <tr class="single_readmore_google">
@@ -258,9 +273,14 @@ EOS;
                     <label>{$str_google_font_family}</label> <select name='attachment[{$this->slide->ID}][readmore_google_font_family]'>{$readmore_google_font_family}</select>
                 </td>
             </tr>
+            <tr class="single_readmore_other">
+                <td>
+                    <label>{$str_other_font_family}</label> <input class='option' type='text'  name="attachment[{$this->slide->ID}][readmore_other_font_family]" value="{$readmore_other_font_family}" />
+                </td>
+            </tr>
             <tr>
                 <td>
-                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][readmore_font_style]'>$readmore_font_style</select>
+                    <label>{$str_font_style}</label> <select name='attachment[{$this->slide->ID}][readmore_font_style][]' multiple>$readmore_font_style</select>
                 </td>
             </tr>
             <tr>
@@ -335,8 +355,10 @@ EOS;
     }
     protected function _osc_create_font_style_select($selected_font_style='') {
         $html = '';
+        $html .='<option value="inherit" '.(is_array($selected_font_style) && in_array('inherit',$selected_font_style)?'selected="selected"':'').'>Inherit</option>';
+        $html .='<option value="none" '.(is_array($selected_font_style) && in_array('none',$selected_font_style)?'selected="selected"':'').'>None</option>';
         foreach($this->font_style_array as $font_style_value){
-            $html .='<option value="'.$font_style_value.'" '.($selected_font_style==$font_style_value?'selected="selected"':'').'>'.$font_style_value.'</option>';
+            $html .='<option value="'.$font_style_value.'" '.(is_array($selected_font_style) && in_array($font_style_value,$selected_font_style)?'selected="selected"':'').'>'.$font_style_value.'</option>';
         }
         return $html;
     }
@@ -387,10 +409,13 @@ EOS;
             'content_font_size'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_size', true),
             'heading_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_family', true),
             'heading_google_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_google_font_family', true),
+            'heading_other_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_other_font_family', true),
             'readmore_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_family', true),
             'readmore_google_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_google_font_family', true),
+            'readmore_other_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_other_font_family', true),
             'content_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_family', true),
             'content_google_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_google_font_family', true),
+            'content_other_font_family'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_other_font_family', true),
             'heading_font_style'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_font_style', true),
             'readmore_font_style'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_font_style', true),
             'content_font_style'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_font_style', true),
@@ -417,9 +442,11 @@ EOS;
             if($slide['heading_font_family']=='Google Font'){
                 $heading_font_family= 'font-family:'.$slide['heading_google_font_family'].';';
                 if(strpos($_SESSION['enqueue_script'],urlencode($slide['heading_google_font_family']))===false){
-                $prefix= $_SESSION['enqueue_script']==''?'':'|';
-                $_SESSION['enqueue_script'].=$prefix.urlencode($slide['heading_google_font_family']);
+                    $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                    $_SESSION['enqueue_script'].=$prefix.urlencode($slide['heading_google_font_family']);
                 }
+            }elseif($slide['heading_font_family']=='Other'){
+                $heading_font_family='font-family:'.$slide['heading_other_font_family'].';';
             }else{
                 $heading_font_family='font-family:'.$slide['heading_font_family'].';';
             }
@@ -434,8 +461,10 @@ EOS;
                 if(strpos($_SESSION['enqueue_script'],urlencode($slide['content_google_font_family']))===false){
                     $prefix= $_SESSION['enqueue_script']==''?'':'|';
 
-                $_SESSION['enqueue_script'].=$prefix.urlencode($slide['content_google_font_family']);
+                    $_SESSION['enqueue_script'].=$prefix.urlencode($slide['content_google_font_family']);
                 }
+            }elseif($slide['content_font_family']=='Other'){
+                $content_font_family='font-family:'.$slide['content_other_font_family'].';';
             }else{
                 $content_font_family='font-family:'.$slide['content_font_family'].';';
             }
@@ -443,13 +472,16 @@ EOS;
         else{
             $content_font_family= '';
         }
+
         if($slide['readmore_font_family']!=false || $slide['readmore_font_family']!=''){
             if($slide['readmore_font_family']=='Google Font'){
                 $readmore_font_family= 'font-family:'.$slide['readmore_google_font_family'].';';
                 if(strpos($_SESSION['enqueue_script'],urlencode($slide['readmore_google_font_family']))===false){
-               $prefix= $_SESSION['enqueue_script']==''?'':'|';
-                $_SESSION['enqueue_script'].=$prefix.urlencode($slide['readmore_google_font_family']);
+                    $prefix= $_SESSION['enqueue_script']==''?'':'|';
+                    $_SESSION['enqueue_script'].=$prefix.urlencode($slide['readmore_google_font_family']);
                 }
+            }elseif($slide['readmore_font_family']=='Other'){
+                $readmore_font_family='font-family:'.$slide['readmore_other_font_family'].';';
             }else{
                 $readmore_font_family='font-family:'.$slide['readmore_font_family'].';';
             }
@@ -460,40 +492,87 @@ EOS;
         $heading_font_size=($slide['heading_font_size']!=false || $slide['heading_font_size']!=0)?'font-size:'.$slide['heading_font_size'].'px;':'';
 
         $heading_font_color=($slide['heading_font_color']!=false || $slide['heading_font_color']!='')?'color:'.$slide['heading_font_color'].';':'';
-        if($slide['heading_font_style']=='italic'){
-            $heading_font_style='font-style:'.$slide['heading_font_style'].';';
-        }
-        if($slide['heading_font_style']=='underline'){
-            $heading_font_style='text-decoration:'.$slide['heading_font_style'].';';
-        }
-        if($slide['heading_font_style']=='bold'){
-            $heading_font_style='font-weight:'.$slide['heading_font_style'].';';
+
+        $heading_font_style='';
+
+        if(is_array($slide['heading_font_style']) && !in_array('inherit',$slide['heading_font_style'])){
+            if(is_array($slide['heading_font_style']) && in_array('none',$slide['heading_font_style'])){
+                $heading_font_style.='font-style:normal;';
+                $heading_font_style.='text-decoration:none;';
+                $heading_font_style.='font-weight:normal;';
+            }
+            if(is_array($slide['heading_font_style']) && in_array('italic',$slide['heading_font_style'])){
+                $heading_font_style.='font-style:italic;';
+            } else{
+                $heading_font_style.='font-style:normal;';
+            }
+            if(is_array($slide['heading_font_style']) && in_array('underline',$slide['heading_font_style'])){
+                $heading_font_style.='text-decoration:underline;';
+            } else{
+                $heading_font_style.='text-decoration:none;';
+            }
+            if(is_array($slide['heading_font_style']) && in_array('bold',$slide['heading_font_style'])){
+                $heading_font_style.='font-weight:bold;';
+            } else{
+                $heading_font_style.='font-weight:normal;';
+            }
         }
         $content_top_margin=($slide['content_top_margin']!=false || $slide['content_top_margin']!='')?'margin-top:'.$slide['content_top_margin'].'px;':'';
         $content_font_size=($slide['content_font_size']!=false || $slide['content_font_size']!='')?'font-size:'.$slide['content_font_size'].'px;':'';
 
         $content_font_color=($slide['content_font_color']!=false || $slide['content_font_color']!='')?'color:'.$slide['content_font_color'].';':'';
         $content_line_height=($slide['content_line_height']!=false || $slide['content_line_height']!='')?'line-height:'.$slide['content_line_height'].';':'';
-        if($slide['content_font_style']=='italic'){
-            $content_font_style='font-style:'.$slide['content_font_style'].';';
-        }
-        if($slide['content_font_style']=='underline'){
-            $content_font_style='text-decoration:'.$slide['content_font_style'].';';
-        }
-        if($slide['content_font_style']=='bold'){
-            $content_font_style='font-weight:'.$slide['content_font_style'].';';
+        $content_font_style='';
+
+
+        if(is_array($slide['content_font_style']) && !in_array('inherit',$slide['content_font_style'])){
+            if(is_array($slide['content_font_style']) && in_array('none',$slide['content_font_style'])){
+                $content_font_style.='font-style:normal;';
+                $content_font_style.='text-decoration:none;';
+                $content_font_style.='font-weight:normal;';
+            }
+            if(is_array($slide['content_font_style']) && in_array('italic',$slide['content_font_style'])){
+                $content_font_style.='font-style:italic;';
+            } else{
+                $content_font_style.='font-style:normal;';
+            }
+            if(is_array($slide['content_font_style']) && in_array('underline',$slide['content_font_style'])){
+                $content_font_style.='text-decoration:underline;';
+            } else{
+                $content_font_style.='text-decoration:none;';
+            }
+            if(is_array($slide['content_font_style']) && in_array('bold',$slide['content_font_style'])){
+                $content_font_style.='font-weight:bold;';
+            } else{
+                $content_font_style.='font-weight:normal;';
+            }
         }
         $readmore_font_size=($slide['readmore_font_size']!=false || $slide['readmore_font_size']!='')?'font-size:'.$slide['readmore_font_size'].'px;':'';
 
         $readmore_font_color=($slide['readmore_font_color']!=false || $slide['readmore_font_color']!='')?'color:'.$slide['readmore_font_color'].';':'';
-        if($slide['readmore_font_style']=='italic'){
-            $readmore_font_style='font-style:'.$slide['readmore_font_style'].';';
-        }
-        if($slide['readmore_font_style']=='underline'){
-            $readmore_font_style='text-decoration:'.$slide['readmore_font_style'].';';
-        }
-        if($slide['readmore_font_style']=='bold'){
-            $readmore_font_style='font-weight:'.$slide['readmore_font_style'].';';
+        $readmore_font_style='';
+
+        if(is_array($slide['readmore_font_style']) && !in_array('inherit',$slide['readmore_font_style'])){
+            if(is_array($slide['readmore_font_style']) && in_array('none',$slide['readmore_font_style'])){
+                $readmore_font_style.='font-style:normal;';
+                $readmore_font_style.='text-decoration:none;';
+                $readmore_font_style.='font-weight:normal;';
+            }
+            if(is_array($slide['readmore_font_style']) && in_array('italic',$slide['readmore_font_style'])){
+                $readmore_font_style.='font-style:italic;';
+            } else{
+                $readmore_font_style.='font-style:normal;';
+            }
+            if(is_array($slide['readmore_font_style']) && in_array('underline',$slide['readmore_font_style'])){
+                $readmore_font_style.='text-decoration:underline;';
+            } else{
+                $readmore_font_style.='text-decoration:none;';
+            }
+            if(is_array($slide['readmore_font_style']) && in_array('bold',$slide['readmore_font_style'])){
+                $readmore_font_style.='font-weight:bold;';
+            } else{
+                $readmore_font_style.='font-weight:normal;';
+            }
         }
         $readmore_border_color=($slide['readmore_border_color']!=false || $slide['readmore_border_color']!='')?'border-color:'.$slide['readmore_border_color'].';':'';
         $readmore_bg_color=($slide['readmore_bg_color']!=false || $slide['readmore_bg_color']!='')?'background:'.$slide['readmore_bg_color'].';':'';
@@ -790,6 +869,9 @@ EOF;
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_google_font_family', $fields['heading_google_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_google_font_family', $fields['readmore_google_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_google_font_family', $fields['content_google_font_family']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_other_font_family', $fields['heading_other_font_family']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_other_font_family', $fields['readmore_other_font_family']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_other_font_family', $fields['content_other_font_family']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_font_style', $fields['heading_font_style']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_font_style', $fields['readmore_font_style']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_font_style', $fields['content_font_style']);
