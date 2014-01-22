@@ -57,9 +57,9 @@ if(!session_id())
             'content_font_family'=>'Times New Roman',
             'heading_font_family'=>'Arial, Helvetica',
             'readmore_font_family'=>'Arial Black, Gadget',
-            'content_font_style'=>'italic',
-            'heading_font_style'=>'bold',
-            'readmore_font_style'=>'italic',
+            'content_font_style'=>array('none'),
+            'heading_font_style'=>array('none'),
+            'readmore_font_style'=>array('none'),
             'content_font_color'=>'#916C05',
             'heading_font_color'=>'#ffffff',
             'readmore_font_color'=>'#ffffff',
@@ -67,7 +67,10 @@ if(!session_id())
             'readmore_border_color'=>'#ffffff',
             'content_top_margin'=> 0,
             'topPer'=>0,
-            'leftPer'=>0
+            'leftPer'=>0,
+            'heading_other_font_family'=> 'Georgia, serif',
+            'content_other_font_family'=> 'Georgia, serif',
+            'readmore_other_font_family'=> 'Georgia, serif'
         );
 
         return $params;
@@ -103,14 +106,16 @@ if(!session_id())
      * @return string setting value or 'false'
      */
     public function get_setting($name) {
+
         if (!isset($this->settings[$name])) {
             $defaults = $this->_default_settings();
 
             if (isset($defaults[$name])) {
+
                 return $defaults[$name] ? $defaults[$name] : 'false';
             }
         } else {
-            if (strlen($this->settings[$name]) > 0) {
+            if (is_array($this->settings[$name]) || strlen($this->settings[$name]) > 0) {
                 return $this->settings[$name];
             }
         }
@@ -140,7 +145,7 @@ if(!session_id())
         $term = get_term_by('name', $this->id, 'eps-slider');
 
         foreach ($current_terms as $current_term) {
-            if ($current_term != $term->term_id) {
+                     if ($current_term != $term->term_id) {
                 $new_terms[] = intval($current_term);
             }
         }
@@ -428,6 +433,8 @@ if(!session_id())
                 $_SESSION['enqueue_script'].=$prefix.urlencode($this->get_setting('heading_google_font_family'));
             }
 
+        } elseif($this->get_setting('heading_font_family')=='Other'){
+            $heading_family='font-family:'.$this->get_setting('heading_other_font_family').';';
         }else{
             $heading_family='font-family:'.$this->get_setting('heading_font_family').';';
         }
@@ -438,6 +445,8 @@ if(!session_id())
                 $prefix= $_SESSION['enqueue_script']==''?'':'|';
                 $_SESSION['enqueue_script'].=$prefix.urlencode($this->get_setting('content_google_font_family'));
             }
+        }elseif($this->get_setting('content_font_family')=='Other'){
+            $content_family='font-family:'.$this->get_setting('content_other_font_family').';';
         }else{
             $content_family='font-family:'.$this->get_setting('content_font_family').';';
         }
@@ -448,6 +457,8 @@ if(!session_id())
                 $prefix= $_SESSION['enqueue_script']==''?'':'|';
                 $_SESSION['enqueue_script'].=$prefix.urlencode($this->get_setting('readmore_google_font_family'));
             }
+        }elseif($this->get_setting('readmore_font_family')=='Other'){
+            $readmore_family='font-family:'.$this->get_setting('readmore_other_font_family').';';
         }else{
             $readmore_family='font-family:'.$this->get_setting('readmore_font_family').';';
         }
@@ -471,27 +482,30 @@ if(!session_id())
         $heading_size='font-size:'.$this->get_setting('heading_font_size').'px;';
 
         $heading_color='color:'.$this->get_setting('heading_font_color').';';
-        if($this->get_setting('heading_font_style')=='italic'){
-            $heading_font='font-style:'.$this->get_setting('heading_font_style').';';
+
+        $heading_font='';
+        if(is_array($this->get_setting('heading_font_style')) && in_array('italic',$this->get_setting('heading_font_style'))){
+            $heading_font.='font-style:italic;';
         }
-        if($this->get_setting('heading_font_style')=='underline'){
-            $heading_font='text-decoration:'.$this->get_setting('heading_font_style').';';
+        if(is_array($this->get_setting('heading_font_style')) && in_array('bold',$this->get_setting('heading_font_style'))){
+            $heading_font.='font-weight:bold;';
         }
-        if($this->get_setting('heading_font_style')=='bold'){
-            $heading_font='font-weight:'.$this->get_setting('heading_font_style').';';
+        if(is_array($this->get_setting('heading_font_style')) && in_array('underline',$this->get_setting('heading_font_style'))){
+            $heading_font.='text-decoration:underline;';
         }
 
         $content_size='font-size:'.$this->get_setting('content_font_size').'px;';
 
         $content_color='color:'.$this->get_setting('content_font_color').';';
-        if($this->get_setting('content_font_style')=='italic'){
-            $content_font='font-style:'.$this->get_setting('content_font_style').';';
+        $content_font='';
+        if(is_array($this->get_setting('content_font_style')) && in_array('italic',$this->get_setting('content_font_style'))){
+            $content_font.='font-style:italic;';
         }
-        if($this->get_setting('content_font_style')=='bold'){
-            $content_font='font-weight:'.$this->get_setting('content_font_style').';';
+        if(is_array($this->get_setting('content_font_style')) && in_array('bold',$this->get_setting('content_font_style'))){
+            $content_font.='font-weight:bold;';
         }
-        if($this->get_setting('content_font_style')=='underline'){
-            $content_font='text-decoration:'.$this->get_setting('content_font_style').';';
+        if(is_array($this->get_setting('content_font_style')) && in_array('underline',$this->get_setting('content_font_style'))){
+            $content_font.='text-decoration:underline;';
         }
 
         $readmore_size='font-size:'.$this->get_setting('readmore_font_size').'px;';
@@ -500,15 +514,18 @@ if(!session_id())
         $readmore_bgcolor='background-color:'.$this->get_setting('readmore_bg_color').';';
         $readmore_bordercolor='border-color:'.$this->get_setting('readmore_border_color').';';
         $readmore_hoverbgcolor='background-color:'.$this->colourBrightness($this->get_setting('readmore_bg_color'),0.80).';';
-        if($this->get_setting('readmore_font_style')=='italic'){
-            $readmore_font='font-style:'.$this->get_setting('readmore_font_style').'; text-decoration:none;';
+
+        $readmore_font='';
+        if(is_array($this->get_setting('readmore_font_style')) && in_array('italic',$this->get_setting('readmore_font_style'))){
+            $readmore_font.='font-style:italic;';
         }
-        if($this->get_setting('readmore_font_style')=='bold'){
-            $readmore_font='font-weight:'.$this->get_setting('readmore_font_style').'; text-decoration:none;';
+        if(is_array($this->get_setting('readmore_font_style')) && in_array('bold',$this->get_setting('readmore_font_style'))){
+            $readmore_font.='font-weight:bold;';
         }
-        if($this->get_setting('readmore_font_style')=='underline'){
-            $readmore_font='text-decoration:'.$this->get_setting('readmore_font_style').';';
+        if(is_array($this->get_setting('readmore_font_style')) && in_array('underline',$this->get_setting('readmore_font_style'))){
+            $readmore_font.='text-decoration:underline;';
         }
+
         $line_height='line-height:20px';
         if($this->get_setting('content_font_line_height')!=='false'){
             $line_height='line-height:'.$this->get_setting('content_font_line_height').'px;';

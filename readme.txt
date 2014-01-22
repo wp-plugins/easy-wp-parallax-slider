@@ -65,6 +65,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+= 1.7.3 =
+
+* [New] Now Any Font can be include just by select the Custom Font in Font Family and enter your font name.
+
 = 1.7.2 =
 
 * [Fixes] Color Picker bug in WP 3.7.
