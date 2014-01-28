@@ -65,6 +65,11 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+
+= 1.7.4 =
+
+* [Fixes] Resolved apostrophe issue in heading
+
 = 1.7.3 =
 
 * [New] Now Any Font can be include just by select the Custom Font in Font Family and enter your font name.
