@@ -61,15 +61,15 @@ class epsAdminSlider extends epsSliderImageClass {
         $full    = wp_get_attachment_image_src($this->slide->ID, 'full');
         if (!isset($this->settings['load_from_new']) || $this->settings['load_from_new'] ==  false || $this->settings['load_from_new']=='') {
             $url     = get_post_meta($this->slide->ID, 'eps-slider_url', true);
-            $readmore     = get_post_meta($this->slide->ID, 'eps-slider_readmore', true);
+            $readmore     = htmlspecialchars(get_post_meta($this->slide->ID, 'eps-slider_readmore', true),ENT_QUOTES);
             $target  = get_post_meta($this->slide->ID, 'eps-slider_new_window', true) ? 'checked=checked' : '';
-            $heading = get_post_meta($this->slide->ID, 'eps-slider_heading', true);
+            $heading =htmlspecialchars( get_post_meta($this->slide->ID, 'eps-slider_heading', true),ENT_QUOTES);
             $caption = htmlentities($this->slide->post_excerpt, ENT_QUOTES, 'UTF-8');
         } else {
             $url     = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_url', true);
-            $readmore     = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore', true);
+            $readmore     = htmlspecialchars(get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore', true),ENT_QUOTES);
             $target  = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_new_window', true) ? 'checked=checked' : '';
-            $heading = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading', true);
+            $heading = htmlspecialchars(get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading', true),ENT_QUOTES);
             $caption = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_caption', true);
         }
         $flag = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_flag', true);
