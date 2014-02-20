@@ -32,6 +32,16 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 * Every slide have its own settings such as text colors, image position etc.
 * Customize the navigation and pager colors.
 
+
+[Easy Wordpress Parallax Slider Demo](http://demo.oscitasthemes.com/demos/easy-wordpress-parallax-slider/ "Easy Wordpress Parallax Slider Demo")
+
+For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wordpress.org/plugins/easy-bootstrap-shortcodes/)
+
+Want to implement responsive tabs to your pages, check this [Easy Responsive Tabs](http://wordpress.org/plugins/easy-responsive-tabs/)
+
+Follow us [@Twitter](https://twitter.com/oscitasthemes), [@facebook](https://www.facebook.com/oscitasthemes), [@google+](https://plus.google.com/109122908951553852347/posts)
+
+
 Credits: [Meta Slider](http://wordpress.org/plugins/ml-slider/) (Some admin code & functionality)
 
 == Installation ==
