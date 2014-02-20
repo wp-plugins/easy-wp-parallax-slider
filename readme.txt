@@ -30,7 +30,7 @@ http://www.youtube.com/watch?v=HsC7HvfQLes
 * Upload images with wordpress media uploder.
 * You can set the slide change the interval.
 * Every slide have its own settings such as text colors, image position etc.
-* Customize the navigation and pager colors.
+* Customize the navigation and pager colors..
 
 [Easy Wordpress Parallax Slider Demo](http://demo.oscitasthemes.com/demos/easy-wordpress-parallax-slider/ "Easy Wordpress Parallax Slider Demo")
 
