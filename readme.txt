@@ -16,6 +16,8 @@ As the name describes, Easy Wordpress Parallax Slider is most easy parallax slid
 
 http://www.youtube.com/watch?v=HsC7HvfQLes
 
+http://www.youtube.com/watch?v=5FzAM-FgN1E
+
 = Features: =
 
 * Multiple Sliders.
