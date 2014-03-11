@@ -44,7 +44,7 @@
 	left: 0px;
 }
 .da-slide h2,
-.da-slide p,
+.da-slide div.da-slide-content,
 .da-slide .da-link,
 .da-slide .da-img{
 	position: absolute;
@@ -52,7 +52,7 @@
 	left: 110%;
 }
 .da-slider-fb .da-slide h2,
-.da-slider-fb .da-slide p,
+.da-slider-fb .da-slide div.da-slide-content,
 .da-slider-fb .da-slide .da-link{
 	left: 10%;
 	opacity: 1;
@@ -73,7 +73,7 @@
 	/*font-family: 'Economica', Arial, sans-serif;*/
 	font-weight: 700;
 }
-.da-slide p{
+.da-slide div.da-slide-content{
 	width: 45%;
 	/*top: 155px;*/
 	top: 25%;
@@ -210,7 +210,7 @@
 }
 
 .da-slide-current h2,
-.da-slide-current p,
+.da-slide-current div.da-slide-content,
 .da-slide-current .da-link{
 	left: 10%;
 	opacity: 1;
@@ -235,7 +235,7 @@
 	-ms-animation: fromRightAnim1 0.6s ease-in 0.8s both;
 	animation: fromRightAnim1 0.6s ease-in 0.8s both;
 }
-.da-slide-fromright p{
+.da-slide-fromright div.da-slide-content{
 	-webkit-animation: fromRightAnim2 0.6s ease-in 0.8s both;
 	-moz-animation: fromRightAnim2 0.6s ease-in 0.8s both;
 	-o-animation: fromRightAnim2 0.6s ease-in 0.8s both;
@@ -353,7 +353,7 @@
 	-ms-animation: fromLeftAnim1 0.6s ease-in 0.6s both;
 	animation: fromLeftAnim1 0.6s ease-in 0.6s both;
 }
-.da-slide-fromleft p{
+.da-slide-fromleft div.da-slide-content{
 	-webkit-animation: fromLeftAnim2 0.6s ease-in 0.6s both;
 	-moz-animation: fromLeftAnim2 0.6s ease-in 0.6s both;
 	-o-animation: fromLeftAnim2 0.6s ease-in 0.6s both;
@@ -471,7 +471,7 @@
 	-ms-animation: toRightAnim1 0.6s ease-in 0.6s both;
 	animation: toRightAnim1 0.6s ease-in 0.6s both;
 }
-.da-slide-toright p{
+.da-slide-toright div.da-slide-content{
 	-webkit-animation: toRightAnim2 0.6s ease-in 0.3s both;
 	-moz-animation: toRightAnim2 0.6s ease-in 0.3s both;
 	-o-animation: toRightAnim2 0.6s ease-in 0.3s both;
@@ -594,7 +594,7 @@
 	-ms-animation: toLeftAnim1 0.6s ease-in both;
 	animation: toLeftAnim1 0.6s ease-in both;
 }
-.da-slide-toleft p{
+.da-slide-toleft div.da-slide-content{
 	-webkit-animation: toLeftAnim2 0.6s ease-in 0.3s both;
 	-moz-animation: toLeftAnim2 0.6s ease-in 0.3s both;
 	-o-animation: toLeftAnim2 0.6s ease-in 0.3s both;

@@ -34,6 +34,7 @@ http://www.youtube.com/watch?v=5FzAM-FgN1E
 * Every slide have its own settings such as text colors, image position etc.
 * Customize the navigation and pager colors..
 
+
 [Easy Wordpress Parallax Slider Demo](http://demo.oscitasthemes.com/demos/easy-wordpress-parallax-slider/ "Easy Wordpress Parallax Slider Demo")
 
 For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wordpress.org/plugins/easy-bootstrap-shortcodes/)
@@ -67,6 +68,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+
+= 1.7.5 =
+
+* [Update] Now you can add html in content such as ul, ol etc
 
 = 1.7.4 =
 

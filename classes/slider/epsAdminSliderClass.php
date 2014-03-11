@@ -661,7 +661,7 @@ EOS;
         {$heading_font_color}
         {$heading_font_style}
         }
-         .eps-custom-{$this->slider->ID} #da-slide-heading-{$this->slide->ID} p{
+         .eps-custom-{$this->slider->ID} #da-slide-heading-{$this->slide->ID} div.da-slide-content{
          {$content_top_margin}
         {$content_font_size}
         {$content_font_family}
@@ -825,7 +825,7 @@ EOF;
             $html .= "  <h2>{$slide['heading']}</h2>";
         }
         if (strlen($slide['content'])) {
-            $html .= "<p class='da-slide-content'>{$slide['content']}</p>";
+            $html .= "<div class='da-slide-content'>{$slide['content']}</div>";
         }
         $html .= "</div>";
         if (strlen($slide['url'])) {
