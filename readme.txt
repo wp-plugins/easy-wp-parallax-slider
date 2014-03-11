@@ -69,6 +69,10 @@ It's that simple ... just what the name suggests
 == Changelog ==
 
 
+= 1.7.5 =
+
+* [Update] Now you can add html in content such as ul, ol etc
+
 = 1.7.4 =
 
 * [Fixes] Resolved apostrophe issue in heading
