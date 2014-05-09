@@ -185,6 +185,15 @@ if (!$sliderId) {
         <input class='option' type='number' min='0.5' max='100' step='0.5' name="settings[interval]" value="<?php echo $this->slider->get_setting('interval'); ?>" size="3" />Sec
     </td>
 </tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("z-index to define the order", $this->filename) ?>">
+        <?php _e("Z-Index", $this->filename) ?>
+    </td>
+    <td>
+        <?php $z_index = $this->slider->get_setting('slider_z_index', 1000); ?>
+        <input class='option' type='text'  name="settings[slider_z_index]" value="<?php echo $z_index !== 'false' ? $z_index : 1000; ?>" size="3" />
+    </td>
+</tr>
 <!-- slide heading -->
 <tr>
     <td colspan='2' class='highlight'><?php _e("Slide Heading Settings", $this->filename) ?></td>

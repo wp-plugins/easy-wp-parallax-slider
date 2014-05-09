@@ -450,6 +450,11 @@ if(!session_id())
         }else{
             $content_family='font-family:'.$this->get_setting('content_font_family').';';
         }
+        $z_index = 1000;
+        if($this->get_setting('slider_z_index') && is_numeric($this->get_setting('slider_z_index'))){
+            $z_index = $this->get_setting('slider_z_index');
+        }
+
         if($this->get_setting('readmore_font_family')=='Google Font'){
             $readmore_family='font-family:'.$this->get_setting('readmore_google_font_family').';';
 
@@ -566,6 +571,9 @@ if(!session_id())
                     .eps-custom-{$this->id} .da-link:hover{
                     {$readmore_hoverbgcolor}
                     }
+                    .da-slide-current{
+	z-index: {$z_index} !important;
+}
 
 EOF;
 

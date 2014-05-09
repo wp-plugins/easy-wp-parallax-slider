@@ -144,11 +144,19 @@
                 $current.removeClass( rmClasses );
                 $next.removeClass( rmClasses );
 
+                //$current.find('h2').removeClass('animated');
+                $current.find('h2').removeClass('rollIn');
+                //$current.find('h2').addClass('animated');
+                $current.find('h2').addClass('rollOut');
+
                 $current.addClass( classTo );
                 $next.addClass( classFrom );
 
                 $current.removeClass( 'da-slide-current' );
                 $next.addClass( 'da-slide-current' );
+
+                $next.find('h2').addClass('animated');
+                $next.find('h2').addClass('rollIn');
 
             }
 

@@ -4,7 +4,7 @@ Link: http://www.osCitasthemes.com
 Tags: Wordpress Slider, Wordpress Parallax Slider, Parallax Slider, CSS3 Slider, drag, drop, touch, touch based slider, responsive slider,touch responsive slider
 Requires at least: 3.5
 Tested up to: 3.8.0
-Stable tag: 1.0.0
+Stable tag: 1.7.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -32,8 +32,8 @@ http://www.youtube.com/watch?v=5FzAM-FgN1E
 * Upload images with wordpress media uploder.
 * You can set the slide change the interval.
 * Every slide have its own settings such as text colors, image position etc.
-* Customize the navigation and pager colors..
-
+* Customize the navigation and pager colors.
+* Customize the z-index.
 
 [Easy Wordpress Parallax Slider Demo](http://demo.oscitasthemes.com/demos/easy-wordpress-parallax-slider/ "Easy Wordpress Parallax Slider Demo")
 
@@ -68,6 +68,10 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+
+= 1.7.6 =
+
+* [Update] Added new option to give the z-index of slider, to resolve the Dropdown menus shown below the slider issue.
 
 = 1.7.5 =
 
