@@ -3,13 +3,13 @@
   Plugin Name: Easy Parallax Slider
   Plugin URI: http://www.oscitasthemes.com
   Description: Easy Parallax Slider provides layered slider feature.
-  Version: 1.7.6
+  Version: 2.0.0
   Author: oscitas
   Author URI: http://www.oscitasthemes.com
   License: Under the GPL v2 or later
 */
 
-define('EPS_VERSION', '1.7.6');
+define('EPS_VERSION', '2.0.0');
 define('EPS_BASE_URL', plugins_url('',__FILE__));
 define('EPS_ASSETS_URL', EPS_BASE_URL . '/assets/');
 define('EPS_BASE_DIR_LONG', dirname(__FILE__));
@@ -47,16 +47,90 @@ class easyParallaxSlider {
 
         add_shortcode('epsshortcode', array($this, 'eps_register_eps_shortcode'));
         add_shortcode('eps-slider', array($this, 'eps_register_eps_shortcode'));
+        add_action('init', array($this,'osc_add_eps_button_to_tinymce'));
+        add_action('admin_print_styles', array($this, 'add_my_tinymce_button_css'));
         $this->eps_register_slide_types();
     }
+    function osc_add_eps_button_to_tinymce() {
+
+        if (!current_user_can('edit_posts') && !current_user_can('edit_pages'))
+            return;
+
+        if (get_user_option('rich_editing') == 'true') {
+
+            if($this->eps_get_current_post_type()!='eps-slider'){
+                add_filter("mce_external_plugins", array($this,"osc_add_eps_plugin"));
+                add_filter('mce_buttons', array($this,'osc_register_eps_editor_button'));
+            }
+        }
+    }
+    public  function osc_add_eps_plugin($plugin_array) {
+        $version=floatval(get_bloginfo('version'));
+        if($version<3.9){
+            $plugin_array['eps_editor_icon']=EPS_ASSETS_URL.'js/eps_tinymce_def.js';
+        } else{
+            $plugin_array['eps_editor_icon']=EPS_ASSETS_URL.'js/eps_tinymce_button.js';
+        }
+        //$plugin_array['eps_editor_icon']=EPS_ASSETS_URL.'js/eps_tinymce_button.js';
+        return $plugin_array;
+    }
+    public function osc_register_eps_editor_button($buttons){
+        $buttons[] = 'eps_editor_icon_button';
+        return $buttons;
+
+    }
+    public function eps_get_current_post_type() {
+        global $post, $typenow, $current_screen, $pagenow;
+        if ($post && $post->post_type)
+            return $post->post_type;
+        elseif ($typenow)
+            return $typenow;
+        elseif ($current_screen && $current_screen->post_type)
+            return $current_screen->post_type;
+        elseif (isset($_REQUEST['post_type']))
+            return sanitize_key($_REQUEST['post_type']);
+        elseif (isset($_REQUEST['post']))
+            return get_post_type($_REQUEST['post']);
+        elseif (in_array($pagenow, array('post-new.php')) && isset($_REQUEST['post_type']) && $_REQUEST['post_type']== '')
+            return 'post';
+        return null;
+    }
     public function ajaxurl() {
+        $postlist = get_posts(array('post_type'=>'eps-slider','posts_per_page'=>-1));
+        $epsposts = array();
+        foreach ($postlist as $post) {
+            $epsposts[] = array('id'=>$post->ID,'title'=>$post->post_title);
+        }
+        $epspost=json_encode($epsposts);
         ?>
         <script type="text/javascript">
             var epsajaxurl = '<?php echo admin_url('admin-ajax.php'); ?>';
+            var epsassetsurl = '<?php echo EPS_ASSETS_URL; ?>';
+            var epsposts = '<?php echo $epspost; ?>';
         </script>
 
+        <style type="text/css">
+            .osc_eps_dropdown .mceFirst a {
+                width: auto !important;
+            }
+            .osc_eps_dropdown img {
+                padding: 3px !important;
+            }
+        </style>
     <?php
     }
+
+    function add_my_tinymce_button_css() {
+
+        wp_register_style('my_tinymce_eps_button_css', EPS_ASSETS_URL.'css/editor.css', array());
+
+        wp_enqueue_style('my_tinymce_eps_button_css');
+
+
+        wp_enqueue_style('dashicons');
+
+    }
+
 
     /**
      * Add the menu page

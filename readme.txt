@@ -3,8 +3,8 @@ Contributors: oscitas
 Link: http://www.osCitasthemes.com
 Tags: Wordpress Slider, Wordpress Parallax Slider, Parallax Slider, CSS3 Slider, drag, drop, touch, touch based slider, responsive slider,touch responsive slider
 Requires at least: 3.5
-Tested up to: 3.8.0
-Stable tag: 1.7.6
+Tested up to: 3.9.0
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -34,6 +34,10 @@ http://www.youtube.com/watch?v=5FzAM-FgN1E
 * Every slide have its own settings such as text colors, image position etc.
 * Customize the navigation and pager colors.
 * Customize the z-index.
+* Customize the in and out effects of heading, content, link and image
+* New animation effects
+* EPS drop down in tinyMCE, to insert slider shortcode.
+
 
 [Easy Wordpress Parallax Slider Demo](http://demo.oscitasthemes.com/demos/easy-wordpress-parallax-slider/ "Easy Wordpress Parallax Slider Demo")
 
@@ -68,6 +72,17 @@ It's that simple ... just what the name suggests
 
 == Changelog ==
 
+
+= 2.0.0 =
+
+* [Update] Added new animation effects.
+* [Update] Now user can add different in and out animation effects.
+* [Update] Now no need to copy paste shortcode as we have provided EPS drop down in tinyMCE, so user can select the slider from there to add shortcode.
+
+
+= 1.7.7 =
+
+* [Update] Added slider dropdown to show the created slider list, so no need to copy paste the shortcodes.
 
 = 1.7.6 =
 

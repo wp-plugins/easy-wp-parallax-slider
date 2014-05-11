@@ -5,6 +5,81 @@ $sliderId = $this->slider->id;
 $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font','Other');
 
 $font_style_array=array('none','bold','italic','underline');
+
+
+$eps_in_effects = array('Parallax',
+    "bounce",
+    "shake",
+    "flash",
+    "tada",
+    "swing",
+    "wobble",
+    "pulse",
+    "flip",
+    "flipInX",
+    "flipInY",
+    "fadeIn",
+    "fadeInUp",
+    "fadeInDown",
+    "fadeInLeft",
+    "fadeInRight",
+    "fadeInUpBig",
+    "fadeInDownBig",
+    "fadeInLeftBig",
+    "fadeInRightBig",
+    "bounceIn",
+    "bounceInUp",
+    "bounceInDown",
+    "bounceInLeft",
+    "bounceInRight",
+    "rotateIn",
+    "rotateInUpLeft",
+    "rotateInDownLeft",
+    "rotateInUpRight",
+    "rotateInDownRight",
+    "hinge",
+    "rollIn",
+    "lightSpeedIn",
+    "wiggle"
+);
+
+$eps_out_effects = array('Parallax',
+    "bounce",
+    "shake",
+    "flash",
+    "tada",
+    "swing",
+    "wobble",
+    "pulse",
+    "flip",
+    "flipOutX",
+    "flipOutY",
+    "fadeOut",
+    "fadeOutUp",
+    "fadeOutDown",
+    "fadeOutLeft",
+    "fadeOutRight",
+    "fadeOutUpBig",
+    "fadeOutDownBig",
+    "fadeOutLeftBig",
+    "fadeOutLeftBig",
+    "bounceOut",
+    "bounceOutUp",
+    "bounceOutDown",
+    "bounceOutLeft",
+    "bounceOutRight",
+    "rotateOut",
+    "rotateOutUpLeft",
+    "rotateOutDownLeft",
+    "rotateOutUpRight",
+    "rotateOutDownRight",
+    "hinge",
+    "rollOut",
+    "lightSpeedOut",
+    "wiggle");
+
+
+
 global $eps_google_font_family;
 ?>
 
@@ -19,7 +94,6 @@ global $eps_google_font_family;
 
     if ($tabs = $this->eps_all_easy_sliders()) {
         foreach ($tabs as $tab) {
-
             if ($tab['active']) {
                 echo "<div class='nav-tab nav-tab-active'><input type='text' name='title'  value='" .  $tab['title'] . "' onkeypress='this.style.width = ((this.value.length + 1) * 9) + \"px\"' /></div>";
             } else {
@@ -257,9 +331,32 @@ if (!$sliderId) {
         <?php _e("Font Color", $this->filename) ?>
     </td>
     <td>
-
         <input  class='option settingColorSelector' type='text' name="settings[heading_font_color]" value="<?php echo $this->slider->get_setting('heading_font_color'); ?>" size="3" css-prop="color" />
 
+    </td>
+</tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide heading font color", $this->filename) ?>">
+        <?php _e("In Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[heading_in_effect]">
+            <?php foreach($eps_in_effects as $eps_in_effect){
+                echo '<option value="'.$eps_in_effect.'" '.($this->slider->get_setting('heading_in_effect')==$eps_in_effect?'selected="selected"':'').'>'.$eps_in_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide heading font color", $this->filename) ?>">
+        <?php _e("Out Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[heading_out_effect]">
+            <?php foreach($eps_out_effects as $eps_out_effect){
+                echo '<option value="'.$eps_out_effect.'" '.($this->slider->get_setting('heading_out_effect')==$eps_out_effect?'selected="selected"':'').'>'.$eps_out_effect.'</option>';
+            }?>
+        </select>
     </td>
 </tr>
 <!--slide content -->
@@ -347,6 +444,31 @@ if (!$sliderId) {
 
     </td>
 </tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide content in effect", $this->filename) ?>">
+        <?php _e("In Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[content_in_effect]">
+            <?php foreach($eps_in_effects as $eps_in_effect){
+                echo '<option value="'.$eps_in_effect.'" '.($this->slider->get_setting('content_in_effect')==$eps_in_effect?'selected="selected"':'').'>'.$eps_in_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide content out effect", $this->filename) ?>">
+        <?php _e("Out Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[content_out_effect]">
+            <?php foreach($eps_out_effects as $eps_out_effect){
+                echo '<option value="'.$eps_out_effect.'" '.($this->slider->get_setting('content_out_effect')==$eps_out_effect?'selected="selected"':'').'>'.$eps_out_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+
 <!--slide read more url -->
 <tr>
     <td colspan='2' class='highlight'><?php _e("Slide Read More Url Settings", $this->filename) ?></td>
@@ -435,9 +557,35 @@ if (!$sliderId) {
     </td>
 </tr>
 <tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide readmore in effect", $this->filename) ?>">
+        <?php _e("In Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[readmore_in_effect]">
+            <?php foreach($eps_in_effects as $eps_in_effect){
+                echo '<option value="'.$eps_in_effect.'" '.($this->slider->get_setting('readmore_in_effect')==$eps_in_effect?'selected="selected"':'').'>'.$eps_in_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide readmore out effect", $this->filename) ?>">
+        <?php _e("Out Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[readmore_out_effect]">
+            <?php foreach($eps_out_effects as $eps_out_effect){
+                echo '<option value="'.$eps_out_effect.'" '.($this->slider->get_setting('readmore_out_effect')==$eps_out_effect?'selected="selected"':'').'>'.$eps_out_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+
+<!--slide image settings -->
+<tr>
     <td colspan='2' class='highlight'><?php _e("Slide Image Settings", $this->filename) ?></td>
 </tr>
-<!--developer tools -->
+
 <tr>
     <td class='tipsy-tooltip' title="<?php _e("Specify the top position of the slides images (in %age)", $this->filename) ?>">
         <?php _e("Top Position", $this->filename) ?>
@@ -465,9 +613,36 @@ if (!$sliderId) {
     </td>
 </tr>
 <tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide image in effect", $this->filename) ?>">
+        <?php _e("In Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[image_in_effect]">
+            <?php foreach($eps_in_effects as $eps_in_effect){
+                echo '<option value="'.$eps_in_effect.'" '.($this->slider->get_setting('image_in_effect')==$eps_in_effect?'selected="selected"':'').'>'.$eps_in_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+<tr>
+    <td class='tipsy-tooltip' title="<?php _e("Set slide image out effect", $this->filename) ?>">
+        <?php _e("Out Effect", $this->filename) ?>
+    </td>
+    <td>
+        <select class='option' name="settings[image_out_effect]">
+            <?php foreach($eps_out_effects as $eps_out_effect){
+                echo '<option value="'.$eps_out_effect.'" '.($this->slider->get_setting('image_out_effect')==$eps_out_effect?'selected="selected"':'').'>'.$eps_out_effect.'</option>';
+            }?>
+        </select>
+    </td>
+</tr>
+
+<!--developer tools settings -->
+<tr>
     <td colspan='2' class='highlight'><?php _e("Developer Options", $this->filename) ?></td>
 </tr>
-<!--developer tools -->
+
+
 <tr>
     <td class='tipsy-tooltip' title="<?php _e("Specify any custom CSS Classes you would like to be added to the slider wrapper", $this->filename) ?>">
         <?php _e("CSS classes", $this->filename) ?>

@@ -7,6 +7,86 @@ class epsAdminSlider extends epsSliderImageClass {
     private $font_family_array=array('Georgia, serif','Palatino Linotype, Book Antiqua, Palatino','Times New Roman','Arial, Helvetica','Arial Black, Gadget','Comic Sans MS, cursive','Impact, Charcoal','Lucida Sans Unicode','Tahoma, Geneva','Trebuchet MS','Verdana, Geneva','Courier New, Courier, monospace','Lucida Console, Monaco','google'=>'Google Font','Other');
     private $font_style_array=array('bold','italic','underline');
 
+    private $eps_in_effects = array(
+        '',
+        'Parallax',
+        "bounce",
+        "shake",
+        "flash",
+        "tada",
+        "swing",
+        "wobble",
+        "pulse",
+        "flip",
+        "flipInX",
+        "flipInY",
+        "fadeIn",
+        "fadeInUp",
+        "fadeInDown",
+        "fadeInLeft",
+        "fadeInRight",
+        "fadeInUpBig",
+        "fadeInDownBig",
+        "fadeInLeftBig",
+        "fadeInRightBig",
+        "bounceIn",
+        "bounceInUp",
+        "bounceInDown",
+        "bounceInLeft",
+        "bounceInRight",
+        "rotateIn",
+        "rotateInUpLeft",
+        "rotateInDownLeft",
+        "rotateInUpRight",
+        "rotateInDownRight",
+        "hinge",
+        "rollIn",
+        "lightSpeedIn",
+        "wiggle"
+    );
+    private $eps_out_effects = array(
+        '',
+        'Parallax',
+        "bounce",
+        "shake",
+        "flash",
+        "tada",
+        "swing",
+        "wobble",
+        "pulse",
+        "flip",
+        "flipOutX",
+        "flipOutY",
+        "fadeOut",
+        "fadeOutUp",
+        "fadeOutDown",
+        "fadeOutLeft",
+        "fadeOutRight",
+        "fadeOutUpBig",
+        "fadeOutDownBig",
+        "fadeOutLeftBig",
+        "fadeOutLeftBig",
+        "bounceOut",
+        "bounceOutUp",
+        "bounceOutDown",
+        "bounceOutLeft",
+        "bounceOutRight",
+        "rotateOut",
+        "rotateOutUpLeft",
+        "rotateOutDownLeft",
+        "rotateOutUpRight",
+        "rotateOutDownRight",
+        "hinge",
+        "rollOut",
+        "lightSpeedOut",
+        "wiggle");
+
+
+
+
+
+
+
     public function __construct() {
         if(!session_id()) session_start();
         $pluginmenu=explode('/',plugin_basename(__FILE__));
@@ -103,6 +183,19 @@ class epsAdminSlider extends epsSliderImageClass {
         $image_width=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_width', true);
         $image_height=get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_height', true);
 
+        $heading_in_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_in_effect', true);
+        $heading_out_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_out_effect', true);
+
+        $content_in_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_in_effect', true);
+        $content_out_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_out_effect', true);
+
+        $readmore_in_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_in_effect', true);
+        $readmore_out_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_out_effect', true);
+
+        $image_in_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_in_effect', true);
+        $image_out_effect = get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_out_effect', true);
+
+
         // localisation
         $str_heading    = __("Heading", $this->filename);
         $str_content    = __("Content", $this->filename);
@@ -123,6 +216,9 @@ class epsAdminSlider extends epsSliderImageClass {
         $str_width = __("Width", $this->filename);
         $str_height = __("Height", $this->filename);
         $str_line_height = __("Line Height", $this->filename);
+        $str_in_effect = __("In Effect", $this->filename);
+        $str_out_effect = __("Out Effect", $this->filename);
+
         // slide row HTML
         $row  = "<tr class='slide'>";
         $row .= "    <td class='col-1'>";
@@ -155,6 +251,19 @@ class epsAdminSlider extends epsSliderImageClass {
         $heading_font_style = $this->_osc_create_font_style_select($heading_font_style);
         $readmore_font_style = $this->_osc_create_font_style_select($readmore_font_style);
         $content_font_style = $this->_osc_create_font_style_select($content_font_style);
+
+
+        $heading_in_effects = $this->_osc_create_effects_select($heading_in_effect);
+        $heading_out_effects = $this->_osc_create_effects_select($heading_out_effect, 'out');
+
+        $content_in_effects = $this->_osc_create_effects_select($content_in_effect);
+        $content_out_effects = $this->_osc_create_effects_select($content_out_effect, 'out');
+
+        $readmore_in_effects = $this->_osc_create_effects_select($readmore_in_effect);
+        $readmore_out_effects = $this->_osc_create_effects_select($readmore_out_effect, 'out');
+
+        $image_in_effects = $this->_osc_create_effects_select($image_in_effect);
+        $image_out_effects = $this->_osc_create_effects_select($image_out_effect, 'out');
 
 
         $row .= <<<EOS
@@ -197,6 +306,24 @@ class epsAdminSlider extends epsSliderImageClass {
                 <td>
                     <label>{$str_font_color}</label>
                     <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][heading_font_color]' value='{$heading_font_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_font_color}</label>
+                    <input  class='option settingColorSelector' type='text' name='attachment[{$this->slide->ID}][heading_font_color]' value='{$heading_font_color}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_in_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][heading_in_effect]'>{$heading_in_effects}</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_out_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][heading_out_effect]'>{$heading_out_effects}</select>
                 </td>
             </tr>
             <tr>
@@ -244,6 +371,18 @@ class epsAdminSlider extends epsSliderImageClass {
                 <td>
                     <label>{$str_line_height}</label>
                     <input  class='option' type='text' name='attachment[{$this->slide->ID}][content_line_height]' value='{$content_line_height}'/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_in_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][content_in_effect]'>{$content_in_effects}</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_out_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][content_out_effect]'>{$content_out_effects}</select>
                 </td>
             </tr>
         </table>
@@ -302,6 +441,18 @@ EOS;
             </tr>
             <tr>
                 <td>
+                    <label>{$str_in_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][readmore_in_effect]'>{$readmore_in_effects}</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_out_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][readmore_out_effect]'>{$readmore_out_effects}</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <h4 class='slide-settings'>Slide Image Settings</h4>
                 </td>
             </tr>
@@ -318,6 +469,18 @@ EOS;
             <tr>
                 <td>
                     <label>{$str_width}</label><input class='option' type='text' name='attachment[{$this->slide->ID}][image_width]' value='{$image_width}' />px &nbsp;<label>{$str_height}</label><input class='option' type='text'  name='attachment[{$this->slide->ID}][image_height]' value='{$image_height}' />px
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_in_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][image_in_effect]'>{$image_in_effects}</select>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>{$str_out_effect}</label>
+                    <select name='attachment[{$this->slide->ID}][image_out_effect]'>{$image_out_effects}</select>
                 </td>
             </tr>
         </table>
@@ -345,6 +508,19 @@ EOS;
         }
         return $html;
     }
+
+    protected function _osc_create_effects_select($selected_font_family='', $inOut= 'in') {
+        $effects = $this->eps_in_effects;
+        if ($inOut == 'out') {
+            $effects = $this->eps_out_effects;
+        }
+        $html = '';
+        foreach($effects as $font_family_value){
+            $html .='<option value="'.$font_family_value.'" '.($selected_font_family==$font_family_value?'selected="selected"':'').'>'.$font_family_value.'</option>';
+        }
+        return $html;
+    }
+
     protected function _osc_create_google_font_family_select($selected_font_family='') {
         $html = '';
         global $eps_google_font_family;
@@ -428,12 +604,30 @@ EOS;
             'image_top'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_top', true),
             'image_left'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_left', true),
             'image_width'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_width', true),
-            'image_height'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_height', true)
+            'image_height'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_height', true),
+            'heading_in_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_in_effect', true),
+            'heading_in_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_in_effect', true),
+            'heading_out_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_heading_out_effect', true),
+            'content_in_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_in_effect', true),
+            'content_out_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_content_out_effect', true),
+            'readmore_in_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_in_effect', true),
+            'readmore_out_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_readmore_out_effect', true),
+            'image_in_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_in_effect', true),
+            'image_out_effect'=>get_post_meta($this->slider->ID, 'eps-slider_'.$this->slide->ID.'_image_out_effect', true),
         );
 
         // return the slide HTML
 
         return $this->eps_get_parallax_slider_markup($slide).$this->eps_get_parallax_slider_markup_style($slide);
+    }
+
+    function _return_effect_value($slide, $name) {
+        $value = $slide[$name];
+        if (!$value) {
+            $value = $this->settings[$name];
+        }
+        //echo $value;
+        return $value;
     }
 
     private function eps_get_parallax_slider_markup_style($slide){
@@ -677,75 +871,166 @@ EOS;
         {$readmore_border_color}
         {$readmore_bg_color}
         }
-       .eps-custom-{$this->slider->ID} .da-slide-fromright #da-img-{$this->slide->ID}{
-	-webkit-animation: fromRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.8s both;
-	-moz-animation: fromRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.8s both;
-	-o-animation: fromRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.8s both;
-	-ms-animation: fromRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.8s both;
-	animation: fromRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.8s both;
-}
-.eps-custom-{$this->slider->ID} .da-slide-fromleft #da-img-{$this->slide->ID}{
-	-webkit-animation: fromLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	-moz-animation: fromLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	-o-animation: fromLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	-ms-animation: fromLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	animation: fromLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-}
-.eps-custom-{$this->slider->ID} .da-slide-toright #da-img-{$this->slide->ID}{
-	-webkit-animation: toRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in both;
-	-moz-animation: toRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in both;
-	-o-animation: toRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in both;
-	-ms-animation: toRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in both;
-	animation: toRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in both;
-}
-.eps-custom-{$this->slider->ID} .da-slide-toleft #da-img-{$this->slide->ID}{
-	-webkit-animation: toLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	-moz-animation: toLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	-o-animation: toLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	-ms-animation: toLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-	animation: toLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;
-}
-         @-webkit-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: 110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-moz-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: 110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-o-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: 110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-ms-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: 110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: 110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-webkit-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: -110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-moz-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: -110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-o-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: -110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-ms-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: -110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
-						0%{ left: -110%; opacity: 0; }
-						100%{ left: {$leftPer}%; opacity: 1; }
-					}
-					@-webkit-keyframes toRightAnim{$this->slider->ID}{$this->slide->ID}{
+
+EOF;
+
+
+        $elems = array();
+        $showFrom = false;
+        $showTo = false;
+
+        if ($this->_return_effect_value($slide, 'heading_in_effect') == 'Parallax') {
+            $elems['#da-slide-heading-'.$this->slide->ID.' h2']['fromright']=array(
+                'name'=>'fromright',
+                'css'=>'fromRightAnim1 0.6s ease-in 0.8s both;'
+            );
+            $elems['#da-slide-heading-'.$this->slide->ID.' h2']['fromleft']=array(
+                'name'=>'fromleft',
+                'css'=>'fromLeftAnim1 0.6s ease-in 0.6s both;'
+            );
+        }
+        if ($this->_return_effect_value($slide, 'content_in_effect') == 'Parallax') {
+            $elems['#da-slide-heading-'.$this->slide->ID.' .da-slide-content']['fromright']=array(
+                'name'=>'fromright',
+                'css'=>'fromRightAnim2 0.6s ease-in 0.8s both;'
+            );
+            $elems['#da-slide-heading-'.$this->slide->ID.' .da-slide-content']['fromleft']=array(
+                'name'=>'fromleft',
+                'css'=>'fromLeftAnim2 0.6s ease-in 0.6s both;'
+            );
+        }
+        if ($this->_return_effect_value($slide, 'readmore_in_effect') == 'Parallax') {
+            $elems['#da-link-'.$this->slide->ID]['fromright']=array(
+                'name'=>'fromright',
+                'css'=>'fromRightAnim3 0.4s ease-in 1.2s both;'
+            );
+            $elems['#da-link-'.$this->slide->ID]['fromleft']=array(
+                'name'=>'fromleft',
+                'css'=>'fromLeftAnim3 0.4s ease-in 1.2s both;'
+            );
+        }
+        if ($this->_return_effect_value($slide, 'image_in_effect') == 'Parallax') {
+            $showFrom = true;
+            $elems['#da-img-'.$this->slide->ID]['fromright']=array(
+                'name'=>'fromright',
+                'css'=>"fromRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.8s both;"
+            );
+            $elems['#da-img-'.$this->slide->ID]['fromleft']=array(
+                'name'=>'fromleft',
+                'css'=>"fromLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;"
+            );
+        }
+
+
+        if ($this->_return_effect_value($slide, 'heading_out_effect') == 'Parallax') {
+            $elems['#da-slide-heading-'.$this->slide->ID.' h2']['toright']=array(
+                'name'=>'toright',
+                'css'=>'toRightAnim1 0.6s ease-in 0.6s both;'
+            );
+            $elems['#da-slide-heading-'.$this->slide->ID.' h2']['toleft']=array(
+                'name'=>'toleft',
+                'css'=>'toLeftAnim1 0.6s ease-in both;'
+            );
+        }
+        if ($this->_return_effect_value($slide, 'content_out_effect') == 'Parallax') {
+            $elems['#da-slide-heading-'.$this->slide->ID.' .da-slide-content']['toright']=array(
+                'name'=>'toright',
+                'css'=>'toRightAnim2 0.6s ease-in 0.3s both;'
+            );
+            $elems['#da-slide-heading-'.$this->slide->ID.' .da-slide-content']['toleft']=array(
+                'name'=>'toleft',
+                'css'=>'toLeftAnim2 0.6s ease-in 0.3s both;'
+            );
+        }
+        if ($this->_return_effect_value($slide, 'readmore_out_effect') == 'Parallax') {
+            $elems['#da-link-'.$this->slide->ID]['toright']=array(
+                'name'=>'toright',
+                'css'=>'toRightAnim3 0.4s ease-in both;'
+            );
+            $elems['#da-link-'.$this->slide->ID]['toleft']=array(
+                'name'=>'toleft',
+                'css'=>'toLeftAnim3 0.4s ease-in both;'
+            );
+        }
+        if ($this->_return_effect_value($slide, 'image_out_effect') == 'Parallax') {
+            $showTo = true;
+            $elems['#da-img-'.$this->slide->ID]['toright']=array(
+                'name'=>'toright',
+                'css'=>"toRightAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in both;"
+            );
+            $elems['#da-img-'.$this->slide->ID]['toleft']=array(
+                'name'=>'toleft',
+                'css'=>"toLeftAnim{$this->slider->ID}{$this->slide->ID} 0.6s ease-in 0.6s both;"
+            );
+        }
+
+
+        foreach ($elems as $eindex=>$elem) {
+            foreach ($elem as $el) {
+                $css .=<<<EOF
+                    .eps-custom-{$this->slider->ID} .da-slide-{$el['name']} {$eindex} {
+                        -webkit-animation: {$el['css']}
+                        -moz-animation: {$el['css']}
+                        -o-animation: {$el['css']}
+                        -ms-animation: {$el['css']}
+                        animation: {$el['css']}
+                    }
+EOF;
+            }
+        }
+
+        if ($showFrom) {
+
+
+
+        $css .=<<<EOF
+
+            @-webkit-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: 110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-moz-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: 110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-o-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: 110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-ms-keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: 110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @keyframes fromRightAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: 110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-webkit-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: -110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-moz-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: -110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-o-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: -110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @-ms-keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: -110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+            @keyframes fromLeftAnim{$this->slider->ID}{$this->slide->ID}{
+                0%{ left: -110%; opacity: 0; }
+                100%{ left: {$leftPer}%; opacity: 1; }
+            }
+
+EOF;
+        }
+        if ($showTo) {
+		    $css .=<<<EOF
+                @-webkit-keyframes toRightAnim{$this->slider->ID}{$this->slide->ID}{
 					0%{ left: {$leftPer}%;  opacity: 1; }
 					30%{ left: {$leftper5}%;  opacity: 1; }
 					100%{ left: 100%; opacity: 0; }
@@ -800,7 +1085,9 @@ EOS;
 					90%{ left: 0%;  opacity: 0; }
 					100%{ left: -50%; opacity: 0; }
 				}
-
+EOF;
+        }
+        $css .=<<<EOF
 				#da-slider-eps_{$this->slider->ID} .da-dots span {
 				    background: none repeat scroll 0 0 {$pager_color};
 				}
@@ -813,7 +1100,6 @@ EOF;
 
         if (strlen($css)) {
             return "<style type='text/css'>{$css}\n    </style>";
-
         }
     }
     private function eps_get_parallax_slider_markup($slide) {
@@ -822,18 +1108,50 @@ EOF;
         $html = " <div class='da-slide'>";
         $html .= " <div  id='da-slide-heading-".$this->slide->ID."' class='da-slide-heading-content'>";
         if (strlen($slide['heading'])) {
-            $html .= "  <h2>{$slide['heading']}</h2>";
+            $in_effect = $slide['heading_in_effect'];
+            $out_effect = $slide['heading_out_effect'];
+            if ( !$in_effect) {
+                $in_effect = isset($this->settings['heading_in_effect']);
+            }
+            if ( !$out_effect) {
+                $out_effect = isset($this->settings['heading_out_effect']);
+            }
+            $html .= "  <h2 data-in_effect='{$in_effect}' data-out_effect='{$out_effect}'>{$slide['heading']}</h2>";
         }
         if (strlen($slide['content'])) {
-            $html .= "<div class='da-slide-content'>{$slide['content']}</div>";
+            $in_effect = $slide['content_in_effect'];
+            $out_effect = $slide['content_out_effect'];
+            if ( !$in_effect) {
+                $in_effect = isset($this->settings['content_in_effect']);
+            }
+            if ( !$out_effect) {
+                $out_effect = isset($this->settings['content_out_effect']);
+            }
+            $html .= "<div class='da-slide-content' data-in_effect='{$in_effect}' data-out_effect='{$out_effect}'>{$slide['content']}</div>";
         }
         $html .= "</div>";
         if (strlen($slide['url'])) {
+            $in_effect = $slide['readmore_in_effect'];
+            $out_effect = $slide['readmore_out_effect'];
+            if ( !$in_effect) {
+                $in_effect = isset($this->settings['readmore_in_effect']);
+            }
+            if ( !$out_effect) {
+                $out_effect = isset($this->settings['readmore_out_effect']);
+            }
             $readmoretext=strlen($slide['readmore']) ? $slide['readmore']:'Read More';
-            $html .= "<a href='{$slide['url']}' target='{$slide['target']}' id='da-link-".$this->slide->ID."' class='da-link'>{$readmoretext}</a>";
+            $html .= "<a href='{$slide['url']}' target='{$slide['target']}' id='da-link-".$this->slide->ID."' class='da-link' data-in_effect='{$in_effect}' data-out_effect='{$out_effect}'>{$readmoretext}</a>";
         }
         $html=trim($html);
-        $html .="<div id='da-img-".$this->slide->ID."' class='da-img' style=' background: url({$slide['thumb']});' title='{$slide['alt']}' >&nbsp;</div>";
+        $in_effect = $slide['image_in_effect'];
+        $out_effect = $slide['image_out_effect'];
+        if ( !$in_effect) {
+            $in_effect = isset($this->settings['image_in_effect']);
+        }
+        if ( !$out_effect) {
+            $out_effect = isset($this->settings['image_out_effect']);
+        }
+        $html .="<div id='da-img-".$this->slide->ID."' class='da-img' style=' background: url({$slide['thumb']});' title='{$slide['alt']}'  data-in_effect='{$in_effect}' data-out_effect='{$out_effect}'>&nbsp;</div>";
         //$html .="<div id='da-img-".$this->slide->ID."' class='da-img'><img src='{$slide['thumb']}' alt='{$slide['alt']}' /></div>";
         $html .='</div>';
 
@@ -885,6 +1203,17 @@ EOF;
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_image_left', $fields['image_left']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_image_width', $fields['image_width']);
         $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_image_height', $fields['image_height']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_in_effect', $fields['heading_in_effect']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_heading_out_effect', $fields['heading_out_effect']);
+
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_in_effect', $fields['content_in_effect']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_content_out_effect', $fields['content_out_effect']);
+
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_image_in_effect', $fields['image_in_effect']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_image_out_effect', $fields['image_out_effect']);
+
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_in_effect', $fields['readmore_in_effect']);
+        $this->eps_add_or_update_or_delete_meta($this->slider->ID,  $this->slide->ID.'_readmore_out_effect', $fields['readmore_out_effect']);
 
 
     }

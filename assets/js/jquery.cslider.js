@@ -144,20 +144,30 @@
                 $current.removeClass( rmClasses );
                 $next.removeClass( rmClasses );
 
-                //$current.find('h2').removeClass('animated');
-                $current.find('h2').removeClass('rollIn');
-                //$current.find('h2').addClass('animated');
-                $current.find('h2').addClass('rollOut');
+                var elem = ['h2', '.da-slide-content', '.da-link', '.da-img'];
+                jQuery.each(elem, function(i,e) {
+                    $current.find(e).removeClass('animated '+$current.find(e).data('in_effect')+' '+$current.find(e).data('out_effect'));
+                });
 
                 $current.addClass( classTo );
                 $next.addClass( classFrom );
 
+                //$current.find('h2').removeClass('animated');
+
+                jQuery.each(elem, function(i,e) {
+                    $current.find(e).addClass('animated '+$current.find(e).data('out_effect'));
+                });
+
+                jQuery.each(elem, function(i,e) {
+                    $next.find(e).removeClass('animated '+$next.find(e).data('in_effect')+' '+$next.find(e).data('out_effect'));
+                });
+
                 $current.removeClass( 'da-slide-current' );
                 $next.addClass( 'da-slide-current' );
 
-                $next.find('h2').addClass('animated');
-                $next.find('h2').addClass('rollIn');
-
+                jQuery.each(elem, function(i,e) {
+                    $next.find(e).addClass('animated '+$next.find(e).data('in_effect'));
+                });
             }
 
             // fallback
