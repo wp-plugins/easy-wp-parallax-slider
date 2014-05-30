@@ -45,7 +45,7 @@ For bootstrap shortcodes, check our plugin [Easy Bootstrap Shortcodes](http://wo
 
 Want to implement responsive tabs to your pages, check this [Easy Responsive Tabs](http://wordpress.org/plugins/easy-responsive-tabs/)
 
-Follow us [@Twitter](https://twitter.com/oscitasthemes), [@facebook](https://www.facebook.com/oscitasthemes), [@google+](https://plus.google.com/109122908951553852347/posts)
+Follow us [@Twitter](https://twitter.com/oscitasthemes), [@facebook](https://www.facebook.com/oscitaswebsolution), [@google+](https://plus.google.com/109122908951553852347/posts)
 
 
 Credits: [Meta Slider](http://wordpress.org/plugins/ml-slider/) (Some admin code & functionality)
