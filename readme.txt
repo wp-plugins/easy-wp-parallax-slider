@@ -13,6 +13,7 @@ Easy Wordpress Parallax Slider is a wordpress plugin with CSS3 and jQuery. Drag 
 == Description ==
 
 >For plugin support go to [http://support.oscitasthemes.com](http://support.oscitasthemes.com)
+> Wordpress 4.0 Ready
 
 As the name describes, Easy Wordpress Parallax Slider is most easy parallax slider using CSS3 and jQuery. You can create unlimited parallex slider with different settings for each slider, it support the shortcode so you can show this anywhere using the shortcode.
 
@@ -73,6 +74,13 @@ It's that simple ... just what the name suggests
 
 
 == Changelog ==
+
+
+
+
+= 2.1.0 =
+
+* [Update] Wordpress 4.0 ready.
 
 
 = 2.0.0 =
